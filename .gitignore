@@ -1,0 +1,47 @@
+# Diretórios de dependências
+node_modules/
+jspm_packages/
+web_modules/
+.venv/
+env/
+venv/
+ENV/
+bin/
+obj/
+
+# Diretórios de build e distribuição
+dist/
+build/
+out/
+.next/
+.nuxt/
+.cache/
+htmlcov/
+.tox/
+.noise/
+
+# Variáveis de ambiente e configurações locais
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.local
+
+# Arquivos específicos do sistema operacional
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Configurações de IDE e editor
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

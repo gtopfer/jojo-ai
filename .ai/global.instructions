@@ -1,0 +1,78 @@
+# Instruções Globais de IA & Padrões de Código
+
+## REGRA ABSOLUTA — FLUXO DE SQUAD OBRIGATÓRIO
+
+**Nunca edite, crie ou modifique arquivos de código diretamente.**
+
+Qualquer mudança de código — feature, bugfix, ajuste visual, refatoração, ajuste de estilo, por menor que seja — DEVE ser delegada imediatamente ao **`.ai/agents/squad-lead.agent.md`**, sem colher contexto, sem ler arquivos, sem análise prévia.
+
+**Seu papel aqui é zero:** repasse o pedido do usuário ao Squad Lead exatamente como recebido. Colher contexto, ler código e tomar decisões técnicas é trabalho do Squad Lead e dos agentes especialistas (PM, Architect, QA, Developer) — ver `.ai/agents/`.
+
+O fluxo orquestrado pelo Squad Lead é:
+1. **PM** → gerar a spec de produto
+2. **Validação do usuário** → AGUARDAR aprovação da spec
+3. **Architect** → gerar a spec técnica
+4. **Validação do usuário** → AGUARDAR aprovação da spec técnica
+5. **QA/TDD** → escrever testes (fase vermelha)
+6. **Developer** → implementar para passar nos testes + code review
+7. **QA/Validação** → rodar testes e validar
+8. **Validação final do usuário** → AGUARDAR aprovação. Se houver pedido de mudanças, o fluxo REINICIA no passo 1.
+
+> Detalhe completo do fluxo: `.ai/agents/squad-lead.agent.md`.
+
+### Sem exceções
+- Mudanças "simples" ou "pequenas" seguem o fluxo completo
+- Ajustes visuais (CSS, layout, ícones) seguem o fluxo completo
+- Correções de bug seguem o fluxo completo
+- Se sentir vontade de ler código ou colher contexto antes de delegar, PARE — isso é trabalho dos agentes
+- Se sentir vontade de editar código direto, PARE e delegue ao Squad Lead
+
+## Paradigmas de Engenharia
+Estes quatro paradigmas são inegociáveis e valem para toda tarefa, independente da stack.
+
+### 1. Desenvolvimento Orientado a Spec & BDD
+- Nunca escreva código de produção sem as duas specs preenchidas: `.ai/template.specs` (requisito do app, negócio, do PM) e `.ai/technical-spec.md` (especificação técnica de construção, do Architect) — mais os cenários Gherkin correspondentes num arquivo `.feature`.
+- Cenários Given/When/Then (Dado/Quando/Então) são a fonte da verdade do comportamento esperado — alinhe implementação e testes a eles, não o contrário.
+
+### 2. Disciplina de Contexto (estilo RAG)
+- Referencie só os arquivos relevantes para a tarefa atual — não traga código não relacionado para o contexto.
+- Antes de implementar, leia `.ai/technical-spec.md` (decisões arquiteturais e seu histórico) e a documentação relevante em `docs/`, em vez de adivinhar.
+- Este arquivo é o contexto padrão que toda sessão deve respeitar — não o duplique nem reescreva em outro lugar; aponte para ele (ver `CLAUDE.md` / `GEMINI.md`).
+
+### 3. Engenharia de Harness (Escudo Test-First)
+- Toda feature nova ou refatoração ganha um teste automatizado (unitário/integração/E2E) antes de ser considerada concluída — ver `.ai/skills/tdd.md`.
+- Os testes verificam contra os cenários Gherkin, não só detalhes de implementação.
+- Uma tarefa não está concluída até o harness de testes passar limpo e `.ai/skills/code-review.md` ter sido executado.
+
+### 4. Engenharia de Loop (Execução Autônoma & Autocorreção)
+- Trabalhe num loop Planejar → Escrever → Testar → Avaliar → Refatorar — ver `.ai/skills/autonomous-loop.md`.
+- Em falha de teste/build: leia o erro real, corrija a causa raiz, rode o loop de novo. Não devolva um estado que falha sem pelo menos uma tentativa de autocorreção.
+- Pare e escale para o humano após falhas repetidas na mesma causa raiz — ver condições de parada no arquivo da skill. Nunca entre em loop indefinido nem declare sucesso silenciosamente sobre um estado que falha.
+
+## Princípios de Desenvolvimento
+1. Escreva código limpo e autoexplicativo, seguindo os princípios SOLID.
+2. Mantenha componentes focados, modulares e de responsabilidade única.
+3. Priorize legibilidade sobre esperteza.
+4. Evite números mágicos ou valores fixos no código; use constantes tipadas ou variáveis de ambiente.
+
+## Estilo e Formatação de Código
+Convenções detalhadas de nomenclatura, imports e commits vivem em `.ai/guidelines/conventions.md` — esse arquivo é a fonte da verdade, não esta seção. Duas regras que valem independente da stack:
+1. Tratamento de Erros: sempre trate erros de forma graciosa, com mensagens claras e descritivas e logging. Evite blocos catch vazios.
+2. Comentários: comente o *porquê*, não o *o quê*. Mantenha a documentação de API (JSDoc, docstrings) atualizada.
+
+## Arquitetura & Guias Especializados
+- Estrutura de camadas e stack: `.ai/guidelines/architecture-guidelines.md`
+- Padrões de backend: `.ai/guidelines/backend-guidelines.md`
+- Padrões de frontend: `.ai/guidelines/frontend-guidelines.md`
+- Papéis especializados (PM, Architect, QA, Developer, Squad Lead): `.ai/agents/`
+
+## Comportamento e Interação da IA
+1. Ao implementar uma feature, sempre leia o arquivo `.feature` (BDD) correspondente em `.ai/`, se existir.
+2. Atualize o README ou a documentação sempre que introduzir mudanças que quebram compatibilidade ou novas variáveis de ambiente.
+3. Produza arquivos de código completos e limpos, ou diffs padrão, em vez de trechos com comentários do tipo "// o resto do código permanece igual".
+4. Antes de declarar uma tarefa concluída, rode o checklist de `.ai/skills/code-review.md` nos arquivos alterados.
+
+## Disciplina de Documentação
+1. Toda feature ou correção concluída ganha uma entrada em `docs/CHANGELOG.md` (focada em impacto, não em detalhe de implementação) e um link em "Histórico de Features" em `docs/README.md`.
+2. Toda decisão que muda arquitetura, stack ou uma abordagem já aceita ganha uma entrada nova (append, nunca sobrescrita) na seção 9 de `.ai/technical-spec.md`.
+3. Confira o Definition of Done em `.ai/template.specs` antes de declarar uma feature concluída — um item não marcado significa que o trabalho não está pronto.
