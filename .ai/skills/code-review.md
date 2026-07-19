@@ -1,44 +1,20 @@
-# Skill: Checklist de Code Review
+# Skill: Checklist de Code Review Programático
 
-Execute este checklist antes de declarar qualquer implementação concluída. É agnóstico de linguagem/framework — adapte os comandos exatos à stack do projeto.
+Esta skill define o processo de garantia de qualidade de código. Ela deve ser executada obrigatoriamente pelo desenvolvedor antes de encerrar o desenvolvimento.
 
-## 1. Integridade Estrutural
-Para cada arquivo criado ou modificado, releia-o por completo após qualquer edição de busca-e-substituição. Falha comum: uma operação de substituição altera só parte de um bloco e deixa código duplicado ou órfão para trás.
-- Nenhuma declaração duplicada de função/classe/tipo
-- Nenhum código morto sobrando de uma edição parcial
-- Tamanho do arquivo condizente com o que ele faz (checagem de sanidade com `wc -l`)
+## 1. Validação Automatizada (CLI)
+A primeira e mais importante etapa do code review é executar a validação estática programática do projeto.
+- **Comando Obrigatório**: RODE `./devkit review` na raiz do projeto.
+- Este comando detectará automaticamente a stack do projeto, executará o linter, o typecheck e rodará a suíte de testes do projeto, além de fazer uma varredura em busca de comentários `TODO` ou `FIXME` e trechos de código incompletos.
 
-## 2. Conformidade Arquitetural
-- O código novo está na camada/pasta correta conforme a estrutura do projeto (ver `.ai/technical-spec.md`, se existir)
-- Nenhum import que viole camadas (ex.: lógica de domínio/negócio importando infraestrutura ou UI)
-- Segue as regras de nomenclatura e estilo de `.ai/global.instructions`
+## 2. Critérios de Avaliação
+O code review é considerado **APROVADO** apenas se a saída de `./devkit review` retornar sucesso (saída 0) e sem violações. Se o comando reportar falha, o desenvolvedor deve:
+1. Ler o log de erros produzido pela CLI.
+2. Corrigir as falhas diretamente no código.
+3. Executar `./devkit review` novamente até obter sucesso absoluto.
 
-## 3. Build e Checagem de Tipos
-Rode o comando de build/typecheck do projeto (ex.: `tsc --noEmit`, `go build`, `mypy`, `cargo check`) e confirme zero erros.
-
-## 4. Testes
-Rode a suíte de testes do projeto. Todos devem passar — zero falhas conhecidas. Se a feature tem critérios de aceitação em `.ai/features.feature` ou numa spec, confirme que cada um está coberto por um teste.
-
-## 5. Fundamentos de Segurança
-- Validação de entrada (input) em todo dado externo/fornecido pelo usuário
-- Nenhum segredo, chave ou credencial fixa no código (hardcoded) — deve vir de variáveis de ambiente (`.env`)
-- Nenhum vetor de injeção óbvio (SQL, comando, XSS) introduzido
-
-## Saída Esperada
-
-```
-Code Review — APROVADO
-- Declarações duplicadas: nenhuma
-- Código órfão: nenhum
-- Conformidade arquitetural: OK
-- Build/typecheck: 0 erros
-- Testes: X passando
-```
-
-Ou, se algo falhou:
-
-```
-Code Review — REPROVADO
-- [arquivo]:[linha] — [problema]
-- Correção aplicada: [o que foi feito]
-```
+## 3. Revisão Manual (Auto-Revisão)
+Além da validação automatizada, o desenvolvedor deve fazer uma leitura atenta no git diff para assegurar:
+- **Clean Code**: SOLID, DRY, nomes de variáveis legíveis, documentações claras.
+- **Segurança**: Nenhuma credencial, token ou chave de API salva diretamente no código (hardcoded). Todos os segredos devem vir de variáveis de ambiente.
+- **Sem Placeholders**: Sem comentários desnecessários explicando lógica trivial ou código órfão esquecido.

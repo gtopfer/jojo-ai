@@ -1,37 +1,31 @@
-# Skill: Loop de Execução Autônoma (Planejar → Escrever → Testar → Avaliar → Refatorar)
+# Skill: Loop de Execução Autônoma e Autocorreção
 
-Protocolo para trabalhar numa tarefa com mínima intervenção humana, mantendo-se dentro de limites seguros e reversíveis.
+Este protocolo descreve a rotina de desenvolvimento e depuração iterativa de código para implementar a funcionalidade com o menor nível de ruído possível.
 
-## O Loop
+## 1. O Ciclo do Loop
+Quando estiver na fase de desenvolvimento (`test_red`), siga o fluxo:
 
 ```
-1. PLAN (planejar)     — reafirme a tarefa contra .ai/template.specs / os cenários .feature. Identifique os arquivos a tocar.
-2. WRITE (escrever)    — implemente a menor mudança que satisfaz o passo atual (veja .ai/skills/tdd.md para a ordem test-first).
-3. TEST (testar)       — rode a suíte de testes, build/typecheck e qualquer análise estática relevante.
-4. EVALUATE (avaliar)  — passou? Bate com os cenários Gherkin? Alguma regressão em comportamento adjacente?
-5. REFACTOR (refatorar) — limpe agora que o comportamento está verificado; rode TEST de novo após qualquer refatoração.
+1. PLANEJAR   ➔ Leia .ai/specs/<spec>.md e verifique quais arquivos precisam ser tocados.
+2. ESCREVER   ➔ Implemente a mudança no código (seguindo o princípio TDD).
+3. EXECUTAR   ➔ Rode ./devkit review para validar linter, typecheck, testes e TODOs de uma só vez.
+4. AVALIAR    ➔ Se o resultado for APROVADO, avance. Se for REPROVADO, leia o erro.
+5. REFATORAR  ➔ Limpe e organize o código novo. Execute `./devkit review` novamente após refatorar.
 ```
 
-## Autocorreção em Caso de Falha (Self-Healing)
+## 2. Autocorreção (Self-Healing)
+Se o comando `./devkit review` indicar falhas (linter quebrando, testes falhando, typecheck incorreto):
+1. **Identifique a causa raiz**: Não tente adivinhar. Leia a stack trace impressa pela CLI.
+2. **Correção Direta**: Corrija o arquivo fonte associado ao erro.
+3. **Loop de Re-verificação**: Execute `./devkit review` novamente. Uma correção só é considerada válida após passar pelo crivo da CLI.
 
-Quando um teste, build ou comando falha:
-1. Leia o erro/stack trace real — não adivinhe a causa.
-2. Localize a causa raiz (não só a linha do sintoma).
-3. Corrija, depois rode o loop completo de novo a partir de TEST — uma correção não reverificada não conta.
-4. Registre o que falhou e o que corrigiu nas suas notas de trabalho (não precisa ir em `docs/CHANGELOG.md`, a menos que mude o comportamento/escopo final).
+## 3. Condições de Parada (Esgotamento)
+Para evitar que a IA entre em loops infinitos consumindo tokens desnecessariamente, pare a execução e solicite ajuda do usuário se:
+- **3 tentativas consecutivas** de correção da mesma causa raiz falharem.
+- A correção exigir novas dependências de pacotes não previstas na especificação.
+- Houver falha de infraestrutura externa (ex: credencial de API ausente, banco de dados local inacessível).
 
-## Condições de Parada (obrigatórias — nunca entre em loop infinito)
-
-Escale para o humano em vez de tentar de novo quando:
-- A mesma causa raiz sobrevive a **3 tentativas de correção** seguidas
-- Corrigir a falha exigiria uma decisão fora da spec atual (nova dependência, mudança de schema, mudança de arquitetura não coberta por um ADR existente)
-- A falha é de infraestrutura/ambiente, não do código que você escreveu (credenciais ausentes, serviço inacessível, CI instável sem relação com a mudança)
-- Uma correção tocaria um arquivo ou sistema explicitamente fora do escopo da tarefa
-
-Ao escalar: diga o que foi tentado, o que falhou em cada tentativa, e a pergunta/decisão específica que precisa do humano. Nunca abandone a tarefa silenciosamente nem declare sucesso sobre um estado que ainda falha.
-
-## Definição de "concluído" para uma iteração do loop
-- [ ] Suíte de testes passa limpa (ver `.ai/skills/tdd.md`)
-- [ ] Checklist de `.ai/skills/code-review.md` passa
-- [ ] O resultado bate com os cenários Gherkin do arquivo `.feature`, não só "compila"
-- [ ] Nenhum arquivo fora do escopo foi alterado para "fazer funcionar"
+Ao escalar para o usuário, relate claramente:
+1. O que foi tentado.
+2. Os logs de erro das tentativas falhas.
+3. A decisão ou informação específica necessária para prosseguir.

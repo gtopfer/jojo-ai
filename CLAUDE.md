@@ -1,8 +1,11 @@
 # Instruções para o Claude Code
 
-## REGRA ABSOLUTA
-Nunca edite, crie ou modifique arquivos de código diretamente. Qualquer mudança de código — por menor que seja — deve ser delegada ao fluxo em [`.ai/agents/squad-lead.agent.md`](.ai/agents/squad-lead.agent.md). Leia a regra completa em [`.ai/global.instructions`](.ai/global.instructions) antes de fazer qualquer coisa.
+## REGRA ABSOLUTA (CICLO DE VIDA & ESTADO)
+Toda mudança de código ou documentação é governada por especificações localizadas no diretório [`.ai/specs/`](.ai/specs/) e gerenciada pelo arquivo de controle de progresso [`.ai/state.md`](.ai/state.md).
 
-Os padrões de código, regras de estilo e diretrizes de comportamento de IA deste projeto vivem em [`.ai/global.instructions`](.ai/global.instructions). Leia esse arquivo primeiro e siga-o em toda tarefa neste repositório.
-
-Ao implementar uma feature, o Squad Lead confere em `.ai/` se há um arquivo `.feature` (Gherkin/BDD) correspondente e um `template.specs` preenchido antes de escrever código.
+Ao iniciar qualquer interação neste repositório:
+1. **Leia obrigatoriamente** as instruções completas em [`.ai/global.instructions`](.ai/global.instructions).
+2. **Execute a Rotina de Inicialização**:
+   - Sincronize `.ai/specs/` e [`.ai/state.md`](.ai/state.md).
+   - Identifique a especificação ativa.
+   - Chame o orquestrador em [`.ai/agents/squad-lead.agent.md`](.ai/agents/squad-lead.agent.md) para conduzir o desenvolvimento com base no status atual (PM -> Architect -> QA/TDD -> Developer -> QA/Validação -> PM/DoD).
