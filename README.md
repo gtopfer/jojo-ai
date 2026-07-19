@@ -5,7 +5,7 @@
 │   ██╔══██╗██╔════╝██║   ██║██║ ██╔╝██║╚══██╔══╝      ██╔══██╗██║   │
 │   ██║  ██║█████╗  ██║   ██║█████╔╝ ██║   ██║   █████╗███████║██║   │
 │   ██║  ██║██╔══╝  ╚██╗ ██╔╝██╔═██╗ ██║   ██║   ╚════╝██╔══██║██║   │
-│   ██████╔╝███████╗ ╚████╔╝ ██║  ██╗██║  ██║         ██║  ██║██║   │
+│   ██████╔╝███████╗ ╚████╔╝ ██║  ██╗██║  ██║          ██║  ██║██║   │
 │   ╚═════╝ ╚══════╝  ╚═══╝  ╚═╝  ╚═╝╚═╝   ╚═╝         ╚═╝  ╚═╝╚═╝   │
 │                                                                    │
 │        Dev ToolKit de IA — spec-driven · stateful · CLI            │
@@ -14,131 +14,185 @@
 └────────────────────────────────────────────────────────────────────┘
 ```
 
-# 🚀 DevKit-AI — Guia Completo (Para Iniciantes / For Dummies)
+# DevKit-AI
 
-Bem-vindo ao **DevKit-AI**! Este é um guia passo a passo detalhado para você entender o que é o kit, como ele funciona e como utilizá-lo no seu dia a dia de desenvolvimento — seja para começar um projeto do zero ou para organizar um projeto que já está em andamento.
+Framework de desenvolvimento guiado por especificações (Spec-Driven Development), controle de estado persistente e validação automatizada de código para assistentes de Inteligência Artificial.
 
----
+## Sumário
 
-## 1. O que é o DevKit-AI? (Sem termos difíceis)
-
-Imagine que você está contratando um programador freelancer de IA para criar o seu software. Sem regras, a IA pode:
-1. Escrever código direto no seu projeto sem testar, correndo o risco de quebrar o que já funcionava.
-2. Esquecer as regras visuais que você definiu (como cores e fontes).
-3. Entregar o trabalho incompleto ou sem documentar o que mudou.
-
-O **DevKit-AI** resolve isso criando uma **esteira de produção (pipeline)** automatizada e com **memória local (estado)**. Ele obriga a IA a seguir um fluxo profissional passo a passo, validando cada etapa com você e testando fisicamente o código no seu computador antes de dar a tarefa por encerrada.
-
----
-
-## 2. A CLI `devkit` — Seus Comandos Explicados
-
-O coração do DevKit é o comando `./devkit` na raiz do seu projeto. Veja o que cada comando faz:
-
-### A) `./devkit init [diretório_alvo]`
-* **O que faz**: Instala o cérebro do DevKit no seu projeto.
-* **Na prática**: Copia as pastas de regras (`.ai/`, `docs/`) e os arquivos de configuração para a pasta que você indicar.
-* **Exemplo**: `./devkit init .` (instala na pasta atual).
-
-### B) `./devkit propose`
-* **O que faz**: Abre o assistente interativo para criar uma nova tarefa/funcionalidade.
-* **Na prática**: Ele fará perguntas rápidas no terminal (Título, História de Usuário e Requisitos básicos). Ele criará um arquivo de rascunho em `.ai/specs/00X_nome.md` e colocará a tarefa como `draft` (Rascunho) no painel.
-
-### C) `./devkit status`
-* **O que faz**: Exibe um painel visual lindo do progresso das tarefas no terminal.
-* **Na prática**: Mostra quais tarefas estão concluídas (`done`), quais estão em andamento e em qual fase elas estão travadas (PM, Architect, Developer, etc.).
-
-### D) `./devkit approve`
-* **O que faz**: Aprova a fase atual e move a tarefa ativa para a próxima etapa.
-* **Na prática**: Você roda este comando no terminal sempre que alinhar algo com a IA no chat e quiser que ela avance para o próximo passo no ciclo de vida. Ele atualiza o `.ai/state.md` automaticamente.
-
-### E) `./devkit review`
-* **O que faz**: O fiscal de qualidade do código.
-* **Na prática**: Ele descobre a stack do projeto (Python, Node.js, Rust, Go) e executa fisicamente o build, o linter (formatador) e a suíte de testes. Além disso, ele varre os arquivos buscando comentários esquecidos como `TODO`, `FIXME` ou placeholders de IA (como `// o resto do código continua igual`).
+1. [Visão Geral](#1-visão-geral)
+2. [Arquitetura de Diretórios](#2-arquitetura-de-diretórios)
+3. [Interface de Linha de Comando (CLI)](#3-interface-de-linha-de-comando-cli)
+4. [Ciclo de Vida e Estados da Especificação](#4-ciclo-de-vida-e-estados-da-especificação)
+5. [Fluxo de Comunicação e Validação](#5-fluxo-de-comunicação-e-validação)
+6. [Guias de Inicialização](#6-guias-de-inicialização)
+7. [Protocolos de Robustez e Resiliência](#7-protocolos-de-robustez-e-resiliência)
 
 ---
 
-## 3. As Fases do Ciclo de Vida da Tarefa
+## 1. Visão Geral
 
-Toda funcionalidade que você pedir passará por 6 fases gerenciadas no arquivo `.ai/state.md`. Cada fase ativa um "Runbook" (um papel especializado da IA):
+O **DevKit-AI** é um ecossistema projetado para estruturar o fluxo de trabalho de assistentes de codificação de Inteligência Artificial (como Claude Code e Gemini CLI). O framework substitui abordagens de desenvolvimento não estruturadas por um pipeline rigoroso baseado em três pilares fundamentais:
 
-| Status | Papel da IA | O que acontece | Próximo Passo |
-|---|---|---|---|
-| **`draft`** | **Product Manager (PM)** | A IA conversa com você no chat para detalhar o escopo da feature, expectativas visuais e regras. | Rodar `./devkit approve` no terminal. |
-| **`spec_approved`** | **Architect** | A IA escreve a modelagem técnica em `.ai/technical-spec.md` (diagramas, interface, banco de dados). | Rodar `./devkit approve` no terminal. |
-| **`tech_approved`** | **QA (TDD)** | A IA escreve os testes automatizados da feature (que estarão falhando por enquanto - Fase Vermelha). | Rodar `./devkit approve` (muda para `test_red`). |
-| **`test_red`** | **Developer** | A IA implementa o código e roda `./devkit review` até tudo passar com sucesso. | Rodar `./devkit approve` (muda para `code_review`). |
-| **`code_review`** | **QA (Validação)** | O QA roda a suíte de testes completa para garantir que nada quebrou. | Se passar, roda-se `./devkit approve`. |
-| **`tested`** | **PM (DoD)** | O PM revisa se todos os itens da Definition of Done (DoD) foram cumpridos. | Rodar `./devkit approve` para finalizar (`done`). |
+* **Desenvolvimento Orientado a Especificação (SDD)**: O código de produção e de teste só é gerado após o alinhamento de especificações de negócio e modelagens técnicas explícitas.
+* **Persistência de Estado (Stateful)**: O progresso da implementação é registrado localmente em arquivo Markdown (`.ai/state.md`), garantindo resiliência a quedas de contexto e alternância de sessões da IA.
+* **Validação Física Programática**: Uma CLI local (`./devkit review`) executa builds, linters e suítes de testes, além de varrer arquivos em busca de marcações incompletas, eliminando a aceitação de códigos com base em alucinações da IA.
 
 ---
 
-## 4. Tutoriais de Uso passo a passo
+## 2. Arquitetura de Diretórios
 
-### 💡 Tutorial 1: Usando em uma Aplicação Nova (Começando do Zero)
+O fluxo de informações do toolkit é distribuído nas seguintes pastas e artefatos estruturados:
 
-1. **Inicialize**:
+```
+devkit-ai/
+│
+├── .ai/                                  # Diretório de controle interno
+│   ├── global.instructions               # Instruções de RAG, disciplina de contexto e inicialização
+│   ├── state.md                          # Painel centralizador de tarefas e estados (Task Tracker)
+│   ├── template.specs                    # Modelo de especificação funcional de requisitos
+│   ├── technical-spec.md                 # Modelo de arquitetura e decisões de projeto (ADR)
+│   │
+│   ├── specs/                            # Diretório de especificações ativas da aplicação
+│   │   ├── README.md                     # Diretrizes de organização de arquivos de especificação
+│   │   └── 000_setup.md                  # Especificação inicial de configuração
+│   │
+│   ├── agents/                           # Runbooks operacionais de IA por fase de execução
+│   │   ├── squad-lead.agent.md           #   Orquestrador principal do estado
+│   │   ├── product-manager.agent.md      #   Validador de requisitos de negócio e DoD
+│   │   ├── architect.agent.md            #   Modelador técnico do sistema
+│   │   ├── developer.agent.md            #   Desenvolvedor de código de produção
+│   │   └── qa.agent.md                   #   Engenheiro de qualidade (TDD / Validação)
+│   │
+│   └── skills/                           # Procedimentos de engenharia
+│       ├── code-review.md                #   Fluxo e critérios de revisão estática
+│       └── autonomous-loop.md            #   Loop de desenvolvimento autônomo e self-healing
+│
+├── docs/                                 # Documentação do produto final (entregas)
+│   ├── README.md                         # Índice com link para as especificações implementadas
+│   └── CHANGELOG.md                      # Histórico de alterações e impacto no negócio
+│
+├── devkit                                # Executável da CLI local (Python 3)
+├── CLAUDE.md                             # Configuração de contexto padrão para Claude Code
+└── GEMINI.md                             # Configuração de contexto padrão para Gemini CLI
+```
+
+---
+
+## 3. Interface de Linha de Comando (CLI)
+
+A CLI `./devkit` é o mecanismo responsável pela governança do repositório local.
+
+```bash
+$ ./devkit <comando> [argumentos]
+```
+
+### Comandos Disponíveis:
+
+* **`init [diretório_alvo]`**: Inicializa a estrutura de diretórios do DevKit-AI no local especificado (padrão: diretório atual). Copia as definições básicas de agentes, skills, documentações e o executável.
+* **`propose`**: Inicia o assistente interativo para a criação de uma nova funcionalidade. Solicita título, história de usuário e requisitos básicos pelo terminal, gerando a especificação inicial em `.ai/specs/` em estado `draft`.
+* **`status`**: Renderiza um painel ASCII de status das tarefas a partir do arquivo `.ai/state.md`, com largura de colunas autoajustável e realce de cores ANSI.
+* **`approve`**: Realiza a transição de estado da especificação ativa no arquivo de controle `.ai/state.md`, gerando logs históricos com carimbos de data automáticos.
+* **`review`**: Executa a rotina de garantia de qualidade de código. Detecta a stack tecnológica (Python, Node.js, Rust, Go), roda linter, typecheck e testes configurados, além de analisar se há termos proibidos (`TODO`, `FIXME` ou placeholders) nos arquivos alterados.
+
+---
+
+## 4. Ciclo de Vida e Estados da Especificação
+
+O desenvolvimento de qualquer mudança de código segue a máquina de estados abaixo gerenciada programaticamente:
+
+| Status Atual | Próxima Fase | Responsável | Ação Esperada | Gatilho de Transição |
+| :--- | :--- | :--- | :--- | :--- |
+| **`draft`** | `architect` | Product Manager | IA e usuário co-escrevem requisitos em `.ai/specs/<nome>.md` | `./devkit approve` (pós-alinhamento) |
+| **`spec_approved`** | `qa_tdd` | Architect | Modelagem técnica e diagramas em `.ai/technical-spec.md` | `./devkit approve` (técnico aprovado) |
+| **`tech_approved`** | `developer` | QA (TDD) | Escrita da suite de testes automatizados (fase vermelha) | `./devkit approve` (testes criados) |
+| **`test_red`** | `qa_validation` | Developer | Codificação de produção até o sucesso em `./devkit review` | `./devkit approve` (sucesso no review) |
+| **`code_review`** | `pm_dod` | QA (Validação) | Execução completa de testes e validação contra regressões | `./devkit approve` (suíte com sucesso) |
+| **`tested`** | `done` | PM (DoD) | Checagem de itens do DoD e atualização de documentação | `./devkit approve` (DoD cumprido) |
+| **`done`** | — | — | Funcionalidade arquivada como concluída | — |
+
+---
+
+## 5. Fluxo de Comunicação e Validação
+
+O diagrama a seguir descreve a orquestração de chamadas entre o usuário, o orquestrador (Squad Lead), os runbooks específicos dos agentes e a CLI executável:
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Usuario as Usuário
+    participant SL as Squad Lead (Orquestrador)
+    participant Agent as Agente Ativo (PM/Arch/QA/Dev)
+    participant CLI as CLI ./devkit
+
+    Usuario->>SL: Inicia interação / comando no chat
+    SL->>SL: Lê .ai/state.md e identifica spec ativa
+    SL->>Agent: Ativa Runbook com base no status da spec
+    alt Fase draft ou spec_approved
+        Agent->>Usuario: Interage no chat para refinar especificações
+        Usuario->>CLI: Executa "./devkit approve" no terminal
+        CLI-->>SL: Atualiza estado para a próxima fase
+    else Fase tech_approved
+        Agent->>CLI: Cria arquivos de teste (fase vermelha)
+        Agent->>CLI: Executa "./devkit approve" no terminal
+    else Fase test_red (Desenvolvimento)
+        Agent->>Agent: Codifica regras de negócio
+        Agent->>CLI: Executa "./devkit review" para validação
+        alt review falhou
+            CLI-->>Agent: Retorna erros de linter/testes
+            Agent->>Agent: Aplica correção (Self-Healing) e re-executa review
+        end
+        Agent->>CLI: Executa "./devkit approve" no terminal
+    end
+    SL-->>Usuario: Apresenta relatório consolidado da fase
+```
+
+---
+
+## 6. Guias de Inicialização
+
+### Cenário A: Projetos Novos (Do Zero)
+
+1. **Inicialização da Estrutura**:
    ```bash
-   $ ./devkit init /caminho/do/meu/novo/projeto
+   $ ./devkit init /caminho/do/projeto
    ```
-2. **Crie a feature**:
+2. **Proposta de Feature**:
    ```bash
    $ ./devkit propose
    ```
-   * Digite o título: `Criar página de Login`.
-   * Complete as perguntas. A especificação `SPEC-001` será criada.
-3. **Refine no Chat**:
-   Abra a IA (ex: Claude Code) e diga: *"Vamos detalhar a SPEC-001?"*. A IA atuará como PM. Quando estiver satisfeito com os requisitos propostos, rode no terminal:
-   ```bash
-   $ ./devkit approve
-   ```
-4. **Crie a Arquitetura**:
-   A IA agirá como Architect e preencherá a stack oficial em `.ai/guidelines/architecture-guidelines.md` e `.ai/technical-spec.md`. Após validar a modelagem técnica, rode:
-   ```bash
-   $ ./devkit approve
-   ```
-5. **Escreva Testes e Código**:
-   Prossiga rodando `./devkit approve` após os testes de QA serem criados. A IA (Developer) escreverá o código da página de login. Ela executará `./devkit review` no console para verificar a qualidade. Quando tudo estiver verde, o ciclo será encerrado com o DoD do PM e a tarefa mudará para `done`.
+   Responda às perguntas interativas para registrar a especificação inicial em `.ai/specs/`.
+3. **Refinamento Cooperativo**:
+   Inicie a IA de código e solicite o refinamento da especificação no chat.
 
 ---
 
-### 💡 Tutorial 2: Usando em uma Aplicação que Já Existe (Já em Desenvolvimento)
+### Cenário B: Projetos Existentes (Em Desenvolvimento)
 
-Se você já possui um projeto com códigos e quer organizar o fluxo de trabalho com o DevKit, siga este roteiro:
+Caso o projeto já possua código de produção ativo, o DevKit-AI atua mapeando o sistema sem sobrescrever implementações existentes:
 
-1. **Instale na pasta atual**:
-   Vá para a raiz do seu repositório atual e rode:
+1. **Inicialização no Repositório**:
+   Execute a CLI passando o diretório atual como alvo:
    ```bash
-   $ /caminho/onde/baixou/o/devkit-ai/devkit init .
+   $ /caminho/do/devkit-ai/devkit init .
    ```
-   * O DevKit copiará os arquivos sem apagar o seu código de produção.
-   * A spec `SPEC-000` (Setup Inicial) estará marcada como `done` no painel. Seu projeto atual é o ponto de partida!
-
-2. **Rode o Mapeamento Inicial no Chat (Obrigatório)**:
-   Antes de pedir qualquer feature, abra o chat da IA e digite:
-   > **"Aja como o Architect. Leia o código existente deste repositório e preencha as diretrizes de arquitetura em `.ai/guidelines/architecture-guidelines.md` e a especificação técnica baseline em `.ai/technical-spec.md`."**
-   * A IA fará a varredura das pastas, descobrirá sua stack e preencherá as documentações com a realidade atual do seu código (sem inventar nada do zero).
-
-3. **Defina suas Regras de Design**:
-   Abra o arquivo `.ai/guidelines/design-premises.md` e escreva o design system ou frameworks visuais que o seu projeto já utiliza (ex: *"Esta aplicação usa Tailwind CSS com tema escuro padrão e botões arredondados"*).
-
-4. **Proponha a primeira alteração**:
-   Agora que o DevKit conhece a estrutura do seu projeto atual, rode:
-   ```bash
-   $ ./devkit propose
-   ```
-   E siga o fluxo normal! As próximas mudanças respeitarão a arquitetura e premissas mapeadas.
+2. **Execução do Mapeamento Inicial**:
+   Abra a interface de chat com a IA e envie o seguinte comando de mapeamento arquitetural:
+   > "Aja como o Architect. Leia o código existente deste repositório e preencha as diretrizes de arquitetura em `.ai/guidelines/architecture-guidelines.md` e a especificação técnica baseline em `.ai/technical-spec.md`."
+   * A IA fará a varredura da estrutura de arquivos de produção existentes, identificará pacotes e dependências e registrará o estado atual como baseline em `SPEC-000` (Setup Inicial, com status `done`).
+3. **Parametrização Visual**:
+   Abra `.ai/guidelines/design-premises.md` e insira as restrições estéticas (cores, biblioteca de componentes, regras de formulários) que a aplicação já segue.
 
 ---
 
-## 5. Dicas de Uso e Resolução de Problemas
+## 7. Protocolos de Robustez e Resiliência
 
-### 🛠️ E se os requisitos mudarem no meio do caminho?
-Se você alterar um requisito no arquivo de especificação ativo (ex: de `.ai/specs/001_login.md`) enquanto a IA está codificando, o orquestrador do DevKit detectará a discrepância no início da sessão. 
-A IA retrocederá automaticamente o status no `.ai/state.md` para a fase correta (ex: voltando para `spec_approved` ou `tech_approved`), avisando você no chat: *"Requisitos modificados no arquivo da spec. Retomando da fase de arquitetura para alinhar o código"*.
+### Detecção de Conflitos e Alterações de Escopo
+Se um arquivo de especificação ativo (`.md` em `.ai/specs/`) for alterado manualmente no meio do ciclo de desenvolvimento, o orquestrador (`squad-lead.agent.md`) identificará a alteração durante a análise de inicialização da sessão. O estado da tarefa ativa será retrocedido no `.ai/state.md` para a fase correspondente à alteração (ex: de `test_red` de volta para `spec_approved`), instruindo o usuário sobre a inconsistência detectada.
 
-### 🔄 O que fazer se a IA entrar em loop de testes falhando?
-Os runbooks de desenvolvimento contêm **condições de parada obrigatórias**. Se o comando `./devkit review` falhar devido a algum erro persistente, a IA tentará se autocorrigir no máximo **3 vezes** na mesma causa raiz. Se falhar na terceira, ela parará e perguntará no chat: *"Esgotei as tentativas de correção para o erro X. Preciso de sua ajuda para decidir se mudamos a spec ou o código."*
-
-### 🎨 Onde defino os meus padrões visuais?
-Use sempre o arquivo [design-premises.md](file:///Users/gtopfer/Documents/Projetos/GitHubProject/devkit-ai/.ai/guidelines/design-premises.md). Escreva lá como você quer que os componentes visuais pareçam. As diretivas da IA obrigam a leitura deste arquivo antes de qualquer codificação, garantindo fidelidade visual ao seu design system.
+### Condições de Parada e Autocorreção (Self-Healing)
+Quando a IA de desenvolvimento se depara com falhas de compilação ou de testes durante o comando `./devkit review`, ela executa o ciclo de correção estipulado em `skills/autonomous-loop.md`.
+A execução autônoma é interrompida e escalada para o usuário no chat caso:
+- Ocorram **3 falhas consecutivas** sob a mesma causa raiz.
+- A correção exija dependências ou alterações arquiteturais externas à especificação técnica aprovada.
+- Ocorram erros de infraestrutura local não relacionados ao código (ex: portas de rede ocupadas, serviços externos caídos).
