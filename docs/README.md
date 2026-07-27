@@ -1,12 +1,21 @@
 # Documentação
 
-Índice da documentação deste projeto.
+## Comece aqui (leitura contínua)
 
-## Por onde começar
-- [`CHANGELOG.md`](CHANGELOG.md) — histórico de mudanças notáveis, mais recente primeiro
-- As duas specs do projeto vivem em [`.ai/`](../.ai/), na raiz: [`template.specs`](../.ai/template.specs) (requisito do app, do PM) e [`technical-spec.md`](../.ai/technical-spec.md) (especificação técnica de construção, do Architect — inclui o histórico de decisões arquiteturais)
-- Cenários BDD ficam em [`.ai/features.feature`](../.ai/features.feature)
-- Specs de API, guias de deploy e documentação de schema de banco de dados vão direto nesta pasta, conforme forem escritos
+1. **[`GUIA-DO-USUARIO.md`](GUIA-DO-USUARIO.md)** — jornada didática do zero ao `done` (humano + CLI + chat)  
+2. [`README.md`](../README.md) (raiz) — referência: pastas, CLI completa, diagramas  
+3. [`CHANGELOG.md`](CHANGELOG.md) — o que mudou no produto/kit  
+
+## Referência do workspace
+
+- Specs de negócio: [`.ai/specs/`](../.ai/specs/)  
+- Spec técnica: [`.ai/technical-spec.md`](../.ai/technical-spec.md)  
+- Agents (papéis da IA): [`.ai/agents/README.md`](../.ai/agents/README.md)  
+- Skills: [`.ai/skills/README.md`](../.ai/skills/README.md)  
+- Templates Architect: [`.ai/templates/`](../.ai/templates/)  
+- Adaptação a projeto novo: [`SYSTEM_PROMPT.md`](../SYSTEM_PROMPT.md)  
+- Baseline: [`.ai/specs/000_setup.md`](../.ai/specs/000_setup.md)  
 
 ## Histórico de Features
-_(vazio — adicione um link aqui a cada spec de feature concluída)_
+
+- [SPEC-000 — Configuração Inicial](../.ai/specs/000_setup.md) (`done`)

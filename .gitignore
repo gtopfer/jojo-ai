@@ -1,3 +1,6 @@
+# Métricas locais do DevKit (geradas por approve/reject/propose)
+.ai/metrics.jsonl
+
 # Diretórios de dependências
 node_modules/
 jspm_packages/

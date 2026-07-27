@@ -19,15 +19,17 @@ Você é um Arquiteto de Software Sênior recebendo um workspace que **já vem c
 **Não gere, não recrie e não reescreva nenhum dos arquivos de `.ai/`/`docs/` do zero.** Eles já existem, já são a fonte da verdade, e resumir/duplicar o conteúdo deles aqui só criaria duas versões pra manter sincronizadas. Sua tarefa é mais estreita: confirmar que a cópia está íntegra e adaptar só o que é específico deste projeto.
 
 ## 2. Verificação Inicial
-Confirme que a estrutura abaixo existe na raiz (árvore completa e explicação de cada arquivo está em `README.md`, seção 3):
+Confirme que a estrutura abaixo existe na raiz (árvore completa e explicação de cada arquivo está em `README.md`, seção 2 — Arquitetura de Diretórios):
 
 ```
-.ai/global.instructions          .ai/agents/*.agent.md (5 arquivos)
-.ai/template.specs               .ai/guidelines/*.md (4 arquivos)
-.ai/technical-spec.md            .ai/skills/*.md (3 arquivos)
-.ai/features.feature
+.ai/global.instructions          .ai/agents/*.agent.md (6 agents + README)
+.ai/template.specs               .ai/guidelines/*.md (5 arquivos)
+.ai/technical-spec.md            .ai/skills/*.md (5 skills + README)
+.ai/templates/                   templates ADR / tech-spec por tipo
+.ai/state.md                     .ai/features.feature
+.ai/specs/ (README + 000_setup)
 docs/README.md, docs/CHANGELOG.md
-CLAUDE.md, GEMINI.md, .gitignore
+CLAUDE.md, GEMINI.md, .gitignore, devkit
 ```
 
 Se algo estiver faltando, **avise o usuário e peça pra reconferir a cópia** — não invente o conteúdo do arquivo ausente a partir do nome dele. Se encontrar `backend/`, `frontend/`, `tests/` ou `.env.example` já criados, **não é erro de cópia** — é resíduo de uma feature real já implementada; não mexa.
@@ -51,6 +53,7 @@ Leia `.ai/global.instructions` — a REGRA ABSOLUTA já está ativa: toda mudan�
 ## 5. Fluxo de Execução
 1. Rode a verificação da seção 2.
 2. Pergunte nome do projeto, descrição de uma frase, e stack pretendida (se já souber).
-3. Personalize só os arquivos listados na seção 3.
+3. Personalize só os arquivos listados na tabela da seção 3 acima.
 4. Confirme ao usuário: "Estrutura do devkit-ai íntegra, README personalizado, Regra Absoluta ativa. Pode mandar o primeiro pedido de feature — ele vai passar pelo Squad Lead e, se for a primeira feature real, o Architect define a stack em `architecture-guidelines.md`."
+5. Lembre o usuário de seguir a jornada em `docs/GUIA-DO-USUARIO.md` (capítulos 1–4) se for a primeira vez com o kit.
 ```

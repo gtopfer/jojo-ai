@@ -20,6 +20,7 @@ Framework de desenvolvimento guiado por especificações (Spec-Driven Developmen
 
 ## Sumário
 
+0. **[Guia do Usuário (didático, contínuo)](docs/GUIA-DO-USUARIO.md)** ← comece por aqui se for humano usando o kit  
 1. [Visão Geral](#1-visão-geral)
 2. [Arquitetura de Diretórios](#2-arquitetura-de-diretórios)
 3. [Interface de Linha de Comando (CLI)](#3-interface-de-linha-de-comando-cli)
@@ -27,6 +28,8 @@ Framework de desenvolvimento guiado por especificações (Spec-Driven Developmen
 5. [Fluxo de Comunicação e Validação](#5-fluxo-de-comunicação-e-validação)
 6. [Guias de Inicialização](#6-guias-de-inicialização)
 7. [Protocolos de Robustez e Resiliência](#7-protocolos-de-robustez-e-resiliência)
+
+> **Novo no kit?** Não leia este README de ponta a ponta primeiro. Abra o **[Guia do Usuário](docs/GUIA-DO-USUARIO.md)** (capítulos 1→4), rode `./devkit doctor` e só depois volte aqui como referência.
 
 ---
 
@@ -51,30 +54,44 @@ devkit-ai/
 │   ├── global.instructions               # Instruções de RAG, disciplina de contexto e inicialização
 │   ├── state.md                          # Painel centralizador de tarefas e estados (Task Tracker)
 │   ├── template.specs                    # Modelo de especificação funcional de requisitos
-│   ├── technical-spec.md                 # Modelo de arquitetura e decisões de projeto (ADR)
+│   ├── technical-spec.md                 # Arquitetura e decisões de projeto (ADR); esqueleto limpo no init
+│   ├── features.feature                  # Cenários Gherkin (BDD) da feature ativa
 │   │
 │   ├── specs/                            # Diretório de especificações ativas da aplicação
 │   │   ├── README.md                     # Diretrizes de organização de arquivos de especificação
-│   │   └── 000_setup.md                  # Especificação inicial de configuração
+│   │   └── 000_setup.md                  # Especificação inicial de configuração (baseline)
 │   │
 │   ├── agents/                           # Runbooks operacionais de IA por fase de execução
-│   │   ├── squad-lead.agent.md           #   Orquestrador principal do estado
-│   │   ├── product-manager.agent.md      #   Validador de requisitos de negócio e DoD
-│   │   ├── architect.agent.md            #   Modelador técnico do sistema
-│   │   ├── developer.agent.md            #   Desenvolvedor de código de produção
-│   │   └── qa.agent.md                   #   Engenheiro de qualidade (TDD / Validação)
+│   │   ├── README.md                     #   Índice status → agent
+│   │   ├── squad-lead.agent.md           #   Orquestrador (sync, gates, handoff)
+│   │   ├── product-manager.agent.md      #   Spec de negócio + DoD
+│   │   ├── ux-designer.agent.md          #   UI/UX (fluxos, estados, design system)
+│   │   ├── architect.agent.md            #   Tech-spec, stack, contratos
+│   │   ├── developer.agent.md            #   Implementação + review
+│   │   └── qa.agent.md                   #   TDD (RED) + validação (GREEN)
 │   │
-│   └── skills/                           # Procedimentos de engenharia
-│       ├── code-review.md                #   Fluxo e critérios de revisão estática
-│       └── autonomous-loop.md            #   Loop de desenvolvimento autônomo e self-healing
+│   ├── skills/                           # Procedimentos de engenharia
+│   │   ├── README.md                     #   Índice skill → quem usa
+│   │   ├── ui-ux.md                      #   Checklist de UX/UI e a11y
+│   │   ├── tdd.md                        #   RED → GREEN → REFACTOR + prova de RED
+│   │   ├── code-review.md                #   ./devkit review + checklist de diff
+│   │   └── autonomous-loop.md            #   Self-heal com limite de 3 tentativas
+│   │
+│   └── guidelines/                       # Premissas permanentes do workspace
+│       ├── design-premises.md            #   UI/UX e premissas de produto
+│       ├── architecture-guidelines.md    #   Stack e clean architecture
+│       ├── backend-guidelines.md         #   Padrões de backend
+│       ├── frontend-guidelines.md        #   Padrões de frontend
+│       └── conventions.md                #   Nomenclatura, commits, imports
 │
 ├── docs/                                 # Documentação do produto final (entregas)
 │   ├── README.md                         # Índice com link para as especificações implementadas
 │   └── CHANGELOG.md                      # Histórico de alterações e impacto no negócio
 │
-├── devkit                                # Executável da CLI local (Python 3)
+├── devkit                                # Executável da CLI local (Python 3, stdlib)
 ├── CLAUDE.md                             # Configuração de contexto padrão para Claude Code
-└── GEMINI.md                             # Configuração de contexto padrão para Gemini CLI
+├── GEMINI.md                             # Configuração de contexto padrão para Gemini CLI
+└── SYSTEM_PROMPT.md                      # Prompt de adaptação do kit a um projeto novo
 ```
 
 ---
@@ -89,27 +106,33 @@ $ ./devkit <comando> [argumentos]
 
 ### Comandos Disponíveis:
 
-* **`init [diretório_alvo]`**: Inicializa a estrutura de diretórios do DevKit-AI no local especificado (padrão: diretório atual). Copia as definições básicas de agentes, skills, documentações e o executável.
-* **`propose`**: Inicia o assistente interativo para a criação de uma nova funcionalidade. Solicita título, história de usuário e requisitos básicos pelo terminal, gerando a especificação inicial em `.ai/specs/` em estado `draft`.
-* **`status`**: Renderiza um painel ASCII de status das tarefas a partir do arquivo `.ai/state.md`, com largura de colunas autoajustável e realce de cores ANSI.
-* **`approve`**: Realiza a transição de estado da especificação ativa no arquivo de controle `.ai/state.md`, gerando logs históricos com carimbos de data automáticos.
-* **`review`**: Executa a rotina de garantia de qualidade de código. Detecta a stack tecnológica (Python, Node.js, Rust, Go), roda linter, typecheck e testes configurados, além de analisar se há termos proibidos (`TODO`, `FIXME` ou placeholders) nos arquivos alterados.
+* **`init [diretório_alvo]`**: Copia `.ai/`, `docs/`, `hooks/`, workflow CI e o executável; **sanitiza** o slate do alvo (só `SPEC-000`, tech-spec limpo, etc.).
+* **`propose`**: Wizard interativo **ou** flags: `--title` `--persona` `--want` `--so-that` `--req` (repetível).
+* **`hotfix --title T [--reason R]`**: Spec de emergência em `tech_approved` (pula PM estendido, UX e Architect; exige auditoria no DoD/CHANGELOG).
+* **`status`**: Painel ASCII das specs e fases.
+* **`sync [--migrate-lifecycle]`**: Specs órfãs → `draft`; com flag, corrige fases legadas (ex.: `spec_approved`+`architect` → `ux`).
+* **`activate SPEC-N`**: Coloca a spec no topo da fila do `approve`/`reject`.
+* **`approve` / `reject`**: Avança ou retrocede a spec ativa (inclui `ux_approved`).
+* **`review`**: Lint, typecheck, testes, TODO/FIXME e **heurísticas de UI** (avisos).
+* **`doctor`**: Valida integridade do kit (arquivos, state↔specs, fases, sintaxe da CLI).
+* **`log [--limit N]`**: Histórico do `state.md` + `.ai/metrics.jsonl`.
 
 ---
 
 ## 4. Ciclo de Vida e Estados da Especificação
 
-O desenvolvimento de qualquer mudança de código segue a máquina de estados abaixo gerenciada programaticamente:
+O desenvolvimento de qualquer mudança de código segue a máquina de estados abaixo gerenciada programaticamente. A coluna **Fase Ativa** é o runbook vigente enquanto o status atual não é aprovado; **Próximo Status** é o resultado de `./devkit approve`.
 
-| Status Atual | Próxima Fase | Responsável | Ação Esperada | Gatilho de Transição |
+| Status Atual | Fase Ativa | Responsável | Ação Esperada | Próximo Status (pós-`approve`) |
 | :--- | :--- | :--- | :--- | :--- |
-| **`draft`** | `architect` | Product Manager | IA e usuário co-escrevem requisitos em `.ai/specs/<nome>.md` | `./devkit approve` (pós-alinhamento) |
-| **`spec_approved`** | `qa_tdd` | Architect | Modelagem técnica e diagramas em `.ai/technical-spec.md` | `./devkit approve` (técnico aprovado) |
-| **`tech_approved`** | `developer` | QA (TDD) | Escrita da suite de testes automatizados (fase vermelha) | `./devkit approve` (testes criados) |
-| **`test_red`** | `qa_validation` | Developer | Codificação de produção até o sucesso em `./devkit review` | `./devkit approve` (sucesso no review) |
-| **`code_review`** | `pm_dod` | QA (Validação) | Execução completa de testes e validação contra regressões | `./devkit approve` (suíte com sucesso) |
-| **`tested`** | `done` | PM (DoD) | Checagem de itens do DoD e atualização de documentação | `./devkit approve` (DoD cumprido) |
-| **`done`** | — | — | Funcionalidade arquivada como concluída | — |
+| **`draft`** | `pm` | Product Manager | Co-escreve requisitos em `.ai/specs/<nome>.md` | `spec_approved` |
+| **`spec_approved`** | `ux` | UX / UI Designer | Fluxos, estados de UI, design system (§3 da spec + skill ui-ux) | `ux_approved` |
+| **`ux_approved`** | `architect` | Architect | Modelagem técnica e diagramas em `.ai/technical-spec.md` | `tech_approved` |
+| **`tech_approved`** | `qa_tdd` | QA (TDD) | Suíte de testes automatizados (fase vermelha) | `test_red` |
+| **`test_red`** | `developer` | Developer | Código de produção até `./devkit review` APROVADO | `code_review` |
+| **`code_review`** | `qa_validation` | QA (Validação) | Validação de testes e regressões | `tested` |
+| **`tested`** | `pm_dod` | PM (DoD) | DoD + documentação | `done` |
+| **`done`** | `done` | — | Feature concluída | — |
 
 ---
 
@@ -191,7 +214,7 @@ Caso o projeto já possua código de produção ativo, o DevKit-AI atua mapeando
 Se um arquivo de especificação ativo (`.md` em `.ai/specs/`) for alterado manualmente no meio do ciclo de desenvolvimento, o orquestrador (`squad-lead.agent.md`) identificará a alteração durante a análise de inicialização da sessão. O estado da tarefa ativa será retrocedido no `.ai/state.md` para a fase correspondente à alteração (ex: de `test_red` de volta para `spec_approved`), instruindo o usuário sobre a inconsistência detectada.
 
 ### Condições de Parada e Autocorreção (Self-Healing)
-Quando a IA de desenvolvimento se depara com falhas de compilação ou de testes durante o comando `./devkit review`, ela executa o ciclo de correção estipulado em `skills/autonomous-loop.md`.
+Quando a IA de desenvolvimento se depara com falhas de compilação ou de testes durante o comando `./devkit review`, ela executa o ciclo de correção estipulado em `.ai/skills/autonomous-loop.md`.
 A execução autônoma é interrompida e escalada para o usuário no chat caso:
 - Ocorram **3 falhas consecutivas** sob a mesma causa raiz.
 - A correção exija dependências ou alterações arquiteturais externas à especificação técnica aprovada.
