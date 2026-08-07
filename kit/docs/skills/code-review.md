@@ -1,3 +1,14 @@
+---
+name: Code Review
+type: development
+category: quality
+description: Programmatic and manual review gate before phase advance
+usedFor: [code, review, quality]
+appliesTo: [backend, frontend]
+requiredKnowledge: [git-diff, testing, security-basics]
+conflicts: [skip-review]
+---
+
 # Skill: Code Review (programático + manual)
 
 > **Usado por**: Developer (antes de sair de `test_red`); QA (fase `code_review`); qualquer um que rode `./jojo review`.  
@@ -8,6 +19,11 @@
 - Sempre ao final da implementação.  
 - Sempre na validação QA.  
 - Após refactors grandes no loop autônomo.
+
+## Quando NÃO usar
+
+- Antes de existir diff ou testes da feature (ainda não há o que validar).
+- Como substituto de TDD: review não inventa requisitos.
 
 ## Parte A — Validação automatizada (obrigatória)
 
@@ -52,7 +68,8 @@ Olhe o diff dos arquivos da feature (`git diff` / status). Checklist:
 - [ ] Nomes legíveis; funções curtas; responsabilidade única
 - [ ] Sem duplicação gritante (DRY com juízo)
 - [ ] Sem “código morto”, prints de debug ou comentários óbvios
-- [ ] Camadas respeitadas (domain sem infra; UI sem SQL direto)
+- [ ] Camadas e pastas alinhadas a **`system-design.md` §2**
+- [ ] UI (se houver) alinhada a **`system-design.md` §3** (tokens, estados, lib)
 
 ### Segurança & dados
 

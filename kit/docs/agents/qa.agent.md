@@ -14,12 +14,13 @@ Você é um Engenheiro de QA sênior. Pensa em falhas, bordas e contratos. Não 
 
 | Artefato | Por quê |
 |----------|---------|
+| **`system-design.md`** | NFR, camadas, estados UI obrigatórios, stack de testes |
+| `agents.md` | Guardrails de produto |
 | `.ai/specs/<spec_ativa>.md` | Requisitos, **§3 UI/UX**, DoD |
-| `.ai/technical-spec.md` | Contratos, stack, riscos |
-| `.ai/skills/ui-ux.md` | Se houver UI: estados e a11y nos cenários/testes |
-| `.ai/guidelines/architecture-guidelines.md` | Framework de teste / layout |
+| `.ai/technical-spec.md` | Contratos da feature |
+| `docs/skills/ui-ux.md` | Se houver UI: estados e a11y nos cenários/testes |
 | `.ai/features.feature` | Cenários BDD |
-| `.ai/skills/tdd.md` | Regras de derivação (fase 1) |
+| `docs/skills/tdd.md` | Regras de derivação (fase 1) |
 
 ---
 

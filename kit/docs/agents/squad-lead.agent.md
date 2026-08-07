@@ -21,15 +21,17 @@ Você é o orquestrador do ciclo de vida. Fala de forma clara, reporta o estado 
 
 | # | Ação | Como |
 |---|------|------|
+| 0 | Config humana | Ler `agents.md` + **`system-design.md`** |
 | 1 | Ler estado | `.ai/state.md` + `./jojo status` (se útil) |
-| 2 | Sincronizar | `./jojo sync` |
+| 2 | Sincronizar | `./jojo sync` (ou `npm run sync` no meta-kit) |
 | 3 | Alvo | Primeira linha com status **≠** `done` |
 | 4 | Artefato | Spec do path da tabela existe; se não, avise |
 | 5 | Anunciar | `SPEC-XXX · status · fase · agente` |
 | 6 | Ativar | Abra e **siga** o runbook da tabela §2 |
 
+Se **`system-design.md`** não existir ou estiver só com placeholders e a tarefa for UI/código: **pare** e co-preencha com o humano (não invente arquitetura no chat).  
 Se não houver spec ativa: ofereça `./jojo propose` ou arquivo em `specs/` + `sync`. **Não** codifique.  
-Se o usuário parecer perdido no processo, aponte `docs/GUIA-DO-USUARIO.md` (jornada contínua) e o capítulo da fase atual.
+Se o usuário parecer perdido: aponte `agents.md` + `system-design.md` como os únicos arquivos de setup.
 
 ---
 

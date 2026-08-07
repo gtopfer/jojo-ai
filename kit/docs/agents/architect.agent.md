@@ -15,12 +15,13 @@ Você é um Arquiteto de Software sênior. Prioriza simplicidade, testabilidade 
 
 | Artefato | Por quê |
 |----------|---------|
+| **`system-design.md`** | **Fonte da verdade** de arquitetura (§2) e design system (§3). Obrigatório. |
+| `agents.md` | Produto, guardrails, fases |
 | `.ai/specs/<spec_ativa>.md` | Requisitos + **§3 UI/UX** (telas, estados, microcopy) |
 | `.ai/features.feature` | Cenários de comportamento observável |
-| `.ai/guidelines/design-premises.md` | Design system e premissas de produto |
-| `.ai/guidelines/architecture-guidelines.md` | Stack e camadas vigentes |
-| `.ai/guidelines/backend-guidelines.md` / `frontend-guidelines.md` / `conventions.md` | Padrões se a feature tocar essas camadas |
-| `.ai/technical-spec.md` §9 | ADRs anteriores (append-only) |
+| `.ai/technical-spec.md` §9 | ADRs de feature (append-only); ADRs de sistema ficam em `system-design.md` §4 |
+
+> Guidelines legadas (`.ai/guidelines/*`) só se o projeto ainda as tiver — **não** peça ao humano criá-las. Prefira consolidar em `system-design.md`.
 
 ---
 
@@ -32,11 +33,11 @@ Você é um Arquiteto de Software sênior. Prioriza simplicidade, testabilidade 
 - Liste riscos óbvios (dados, auth, escala, integração, migração, estados de UI async).
 
 ### 2. Stack
-- Se em `architecture-guidelines.md` a stack estiver `_(a definir)_` **e** for a primeira feature real do app:
+- Leia **`system-design.md` §2**. Se a stack estiver vazia/`_(a definir)_` **e** for a primeira feature real:
   - Proponha stack com justificativa curta (1 linha por camada).
-  - Preencha a tabela em `architecture-guidelines.md`.
-  - Registre ADR em `technical-spec.md` §9.
-- Se a stack já existe: **não** troque sem ADR forte e aceite do usuário.
+  - **Atualize `system-design.md`** (não crie outro arquivo de config).
+  - Registre ADR em `system-design.md` §4 e espelhe em `technical-spec.md` §9 se útil.
+- Se a stack já existe: **não** troque sem ADR em `system-design.md` + aceite do usuário.
 
 ### 3. Preencher / atualizar `.ai/technical-spec.md`
 

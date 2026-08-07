@@ -1,17 +1,26 @@
+---
+name: Ducks Pattern
+type: architecture
+category: organization
+description: Modular code organization — group related code by feature, not by type
+usedFor: [backend, frontend, organization]
+appliesTo: [all]
+requiredKnowledge: [modular-architecture, project-structure]
+conflicts: [layer-by-type-folders]
+mandatory: true
+---
+
 # Skill: Ducks Pattern (Guardrail)
 
----
+## Quando usar
 
-name: Ducks Pattern  
-type: architecture  
-category: organization  
-description: Modular code organization — group related code by feature, not by type  
-usedFor: [backend, frontend, organization]  
-appliesTo: [all]  
-requiredKnowledge: [modular-architecture, project-structure]  
-mandatory: true
+- Toda nova feature/domínio em projetos jojo-ai.
+- Reorganização de código espalhado por tipo (`actions/`, `reducers/`, `types/`).
 
----
+## Quando NÃO usar
+
+- Utilities globais e componentes reutilizáveis → `src/shared/`.
+- Shared cross-cutting (não é um “duck” de feature).
 
 ## O Que É
 
@@ -353,4 +362,5 @@ Validação:
 
 ---
 
-**Leia também:** Architecture guidelines do seu projeto (`.ai/guidelines/architecture-guidelines.md`)
+**Leia também:** `system-design.md` §2 (camadas e pastas **deste** projeto).  
+Se §2 definir estrutura diferente de “ducks” nominal mas **coesa por feature**, siga o `system-design.md` e mantenha o espírito do padrão (feature-first, public API, sem pasta por tipo de arquivo).

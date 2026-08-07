@@ -1,3 +1,14 @@
+---
+name: TDD
+type: development
+category: quality
+description: Test-Driven Development — RED → GREEN → REFACTOR cycle
+usedFor: [code, tests, refactor]
+appliesTo: [backend, frontend]
+requiredKnowledge: [testing-frameworks, assertions]
+conflicts: [skip-tests, no-tests]
+---
+
 # Skill: TDD (Test-Driven Development)
 
 > **Usado por**: QA (fase `tech_approved`) e Developer (respeita RED→GREEN→REFACTOR).  
@@ -7,6 +18,11 @@
 
 - Sempre que uma feature/refatoração entra em `tech_approved` ou o harness precisa ser ampliado.
 - Nunca “testar depois se der tempo”.
+
+## Quando NÃO usar
+
+- Documentação pura sem comportamento observável.
+- Spike exploratório explicitamente fora de produção (ainda assim: anote dívida e volte com RED).
 
 ## Fontes da verdade (nesta ordem)
 

@@ -14,9 +14,11 @@ Você é um Product Manager sênior. Fala em linguagem de negócio, evita jargã
 
 | Artefato | Por quê |
 |----------|---------|
+| `agents.md` | Contexto de produto, usuários, guardrails |
+| **`system-design.md` §1** | Limites do sistema, atores, fora de escopo de design |
+| **`system-design.md` §3** | Só para saber se há UI / premissas (não desenhar pixels) |
 | `.ai/specs/<spec_ativa>.md` | Spec da feature |
-| `.ai/template.specs` | Estrutura de seções (modelo) |
-| `.ai/guidelines/design-premises.md` | UI/UX e premissas de produto |
+| `templates/spec.md` | Estrutura de seções (modelo) |
 | `.ai/state.md` | Confirmar status `draft` ou `tested` |
 | (fase DoD) relatório do QA / saída de `./jojo review` | Evidência de qualidade |
 

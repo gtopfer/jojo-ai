@@ -1,0 +1,60 @@
+{
+  "version": "1.2",
+  "generated": "2026-08-07T15:32:47.411Z",
+  "sourceOfTruth": {
+    "product": "agents.md",
+    "systemDesign": "system-design.md",
+    "changelog": "CHANGELOG.md"
+  },
+  "userConfigSurface": [
+    "agents.md",
+    "system-design.md",
+    "CHANGELOG.md"
+  ],
+  "kitRoot": "kit/",
+  "name": "[Nome do Projeto]",
+  "description": "[Descrição breve do que o projeto faz]",
+  "stack": {
+    "frontend": "[tecnologia]",
+    "backend": "[tecnologia]",
+    "database": "[tecnologia]",
+    "ci/cd": "[tecnologia]"
+  },
+  "users": [
+    "[Quem usa]"
+  ],
+  "conventions": {
+    "naming": "[padrão]",
+    "code style": "[padrão]",
+    "[sua convenção]": true
+  },
+  "guardrails": {
+    "mustHave": [
+      "Ducks Pattern (obrigatório)",
+      "[Seu guardrail 1]",
+      "[Seu guardrail 2]"
+    ],
+    "mustNOT": [],
+    "all": [
+      "Ducks Pattern (obrigatório)",
+      "[Seu guardrail 1]",
+      "[Seu guardrail 2]"
+    ]
+  },
+  "systemDesign": {
+    "path": "system-design.md",
+    "status": "template-unfilled",
+    "note": "Agents must read system-design.md for architecture (§2) and design system (§3)."
+  },
+  "skills": [
+    "code-review",
+    "ducks-pattern",
+    "tdd",
+    "ui-ux"
+  ],
+  "notes": [
+    "Generated — do not hand-edit.",
+    "Humans only edit root: agents.md, system-design.md, CHANGELOG.md.",
+    "Kit lives under kit/. Regenerate: cd kit && npm run generate:context"
+  ]
+}

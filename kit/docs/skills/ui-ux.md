@@ -1,14 +1,36 @@
+---
+name: UI/UX
+type: design
+category: design
+description: Interface states, accessibility, consistency and microcopy
+usedFor: [ui, ux, accessibility, microcopy]
+appliesTo: [frontend]
+requiredKnowledge: [design-systems, accessibility, responsive]
+conflicts: []
+---
+
 # Skill: UI/UX (experiência, interface e consistência)
 
 > **Usado por**: UX Designer (fase `spec_approved`); PM (rascunho de §3); Developer/QA (checagem de estados e a11y na implementação).  
-> **Fonte de premissas**: `.ai/guidelines/design-premises.md`  
-> **Fonte de implementação FE**: `.ai/guidelines/frontend-guidelines.md`
+> **Fonte de design (obrigatória):** `system-design.md` §3 (design system do projeto).  
+> **Fonte de produto:** `agents.md` Seção 1.
 
 ## Quando usar
 
 - Feature com qualquer superfície visual ou fluxo humano.  
 - Review de usabilidade antes de `approve` da fase UX.  
 - Diff de UI no Developer (estados, copy, a11y) em paralelo ao code-review.
+
+## Quando NÃO usar
+
+- API / job / CLI / infra sem superfície humana (marque N/A na §3 da spec **e** confirme `system-design.md` §3 = N/A).
+
+## Fonte da verdade de design
+
+1. Leia **`system-design.md` §3** antes de qualquer decisão visual.  
+2. Tokens, lib de componentes, estados e microcopy do projeto **não se inventam no chat**.  
+3. Se §3 estiver vazia: co-preencha `system-design.md` com o humano; só depois detalhe a feature na spec.  
+4. Mudança de design system → atualizar `system-design.md` (+ aceite) antes do código.
 
 ## Princípios (ordem de prioridade)
 
@@ -24,7 +46,7 @@
 - [ ] Dispositivos-alvo definidos  
 - [ ] Happy path em ≤ 7 passos (senão: simplificar ou fatiar feature)  
 - [ ] Pelo menos 2 caminhos de falha ou borda identificados  
-- [ ] Premissas de `design-premises.md` lidas (não contradizer)
+- [ ] Premissas de `system-design.md` §3 lidas (não contradizer)
 
 ## Checklist de interface (por tela/superfície)
 
@@ -48,7 +70,7 @@ Para **cada** tela/modal/drawer:
 
 ### Componentes
 
-- [ ] Preferir biblioteca/design system declarado em `design-premises`  
+- [ ] Preferir biblioteca/design system declarado em `system-design.md` §3  
 - [ ] Variantes semânticas (primary/destructive/ghost) usadas com intenção  
 - [ ] Não recriar Button/Input/Modal existentes  
 
@@ -117,7 +139,7 @@ Registrar na spec:
 - [ ] §3 completa **ou** N/A justificado  
 - [ ] Estados async cobertos  
 - [ ] Gherkin com comportamento observável (se UI)  
-- [ ] Consistente com `design-premises.md`  
+- [ ] Consistente com `system-design.md` §3  
 - [ ] Aceite humano no chat  
 - [ ] Pronto para o Architect modelar contratos de dados da UI  
 

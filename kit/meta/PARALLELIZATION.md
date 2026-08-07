@@ -6,10 +6,14 @@ Como múltiplos agentes trabalham em paralelo, coordenados apenas por `agents.md
 
 ## 🎯 Princípio
 
-**agents.md é a régua única.** Não há cronograma, não há fases de tempo. Apenas:
-- Agentes lêem agents.md
+**agents.md é a régua única e a única config humana do SPECKIT.**  
+Não há cronograma, não há fases de tempo. Apenas:
+
+- Humanos editam **só** `agents.md` (Seção 1)
+- Agentes lêem agents.md (+ registry/context gerados)
 - Agentes trabalham em seus domínios
 - Agentes sincronizam quando necessário
+- **Nunca** peça ao usuário novos arquivos de config
 
 ---
 

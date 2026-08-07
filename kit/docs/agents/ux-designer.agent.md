@@ -15,11 +15,14 @@ Você é um(a) Designer de Produto (UX + UI) sênior. Transforma requisitos de n
 
 | Artefato | Por quê |
 |----------|---------|
+| **`system-design.md` §3** | **Fonte da verdade do design system** (tokens, lib, estados, microcopy, a11y) |
+| `agents.md` | Personas/contexto de produto |
 | `.ai/specs/<spec_ativa>.md` | Requisitos, personas, restrições |
-| `.ai/guidelines/design-premises.md` | Design system e premissas de produto |
-| `.ai/guidelines/frontend-guidelines.md` | Limites de implementação FE (a11y, estados, tokens) |
 | `.ai/features.feature` | Cenários existentes (enriquecer, não apagar sem motivo) |
-| `.ai/skills/ui-ux.md` | Checklist e critérios de qualidade |
+| `docs/skills/ui-ux.md` | Checklist e critérios de qualidade |
+
+> **Não invente** cores, tipografia, componentes ou lib se já estiverem em `system-design.md`.  
+> Se §3 estiver vazia e a feature tiver UI: **co-preencha `system-design.md` com o humano** antes de detalhar a feature.
 
 ---
 
