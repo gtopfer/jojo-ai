@@ -1,4 +1,4 @@
-# Especificação Técnica: DevKit-AI
+# Especificação Técnica: jojo-ai
 
 **Última atualização:** 2026-07-26
 **Versão:** 1.0
@@ -6,11 +6,11 @@
 
 > Preenchido e mantido pelo agente Architect (`.ai/agents/architect.agent.md`). É o par técnico de `.ai/template.specs` (que é do PM, em linguagem de negócio) — juntos, esses dois arquivos são as únicas duas specs deste kit: **o quê** (requisito do app) e **como** (construção técnica).
 >
-> **Nota para `./devkit init`**: em projetos-alvo a CLI reinstala um esqueleto limpo deste arquivo. O conteúdo abaixo descreve o **produto DevKit-AI** (este repositório meta), não a aplicação do cliente.
+> **Nota para `./jojo init`**: em projetos-alvo a CLI reinstala um esqueleto limpo deste arquivo. O conteúdo abaixo descreve o **produto jojo-ai** (este repositório meta), não a aplicação do cliente.
 
 ## 1. Visão Geral
 
-O DevKit-AI é um framework de processo e uma CLI local que impõem Spec-Driven Development a assistentes de codificação. Não é uma aplicação de negócio: o artefato principal é a pasta `.ai/` (agents, guidelines, skills, specs, estado) e o executável `./devkit` (Python 3, apenas stdlib), copiados para projetos via `init`.
+O jojo-ai é um framework de processo e uma CLI local que impõem Spec-Driven Development a assistentes de codificação. Não é uma aplicação de negócio: o artefato principal é a pasta `.ai/` (agents, guidelines, skills, specs, estado) e o executável `./jojo` (Python 3, apenas stdlib), copiados para projetos via `init`.
 
 ## 2. Diagrama de Arquitetura
 
@@ -30,7 +30,7 @@ graph TD
   Arch --> State
   QA --> State
   Dev --> State
-  CLI["./devkit CLI"] --> State
+  CLI["./jojo CLI"] --> State
   CLI --> Review[lint / typecheck / testes / TODO scan]
   Dev --> CLI
   QA --> CLI
@@ -43,7 +43,7 @@ sequenceDiagram
   actor U as Usuário
   participant SL as Squad Lead
   participant A as Agente da fase
-  participant C as ./devkit
+  participant C as ./jojo
 
   U->>SL: Inicia sessão / pedido de feature
   SL->>SL: Lê state.md e specs/
@@ -67,7 +67,7 @@ sequenceDiagram
 
 | Componente | Responsabilidade | Tecnologia |
 |-----------|-----------------|------------|
-| `./devkit` | init, propose, status, sync, approve, reject, review | Python 3 |
+| `./jojo` | init, propose, status, sync, approve, reject, review | Python 3 |
 | `.ai/agents/*.agent.md` | Runbooks por papel/fase (incl. UX Designer) | Markdown |
 | `.ai/skills/*` | ui-ux, TDD, code-review, autonomous-loop | Markdown |
 | `.ai/guidelines/*` | Arquitetura, FE/BE, design, convenções | Markdown |
@@ -111,7 +111,7 @@ Não há banco de dados. O “modelo” é a tabela Markdown em `.ai/state.md`:
 | Risco | Severidade | Mitigação |
 |-------|-----------|-----------|
 | `init` copiar specs/estado do meta-repo para o projeto-alvo | 🟡 | `init` sanitiza specs (mantém só `000_setup`), reseta `technical-spec`, `features.feature`, `state` e docs de entrega |
-| Stack não detectada no meta-repo (`devkit` sem `.py`) | 🟡 | Detecção por shebang/`devkit` e arquivos Python |
+| Stack não detectada no meta-repo (`jojo` sem `.py`) | 🟡 | Detecção por shebang/`jojo` e arquivos Python |
 | IA editar fora do fluxo de fases | 🔴 | Regra absoluta em `global.instructions` + gates `approve`/`review` |
 | Loop infinito de autocorreção | 🟡 | Stop após 3 falhas na mesma causa (`autonomous-loop.md`) |
 
@@ -133,21 +133,21 @@ Não há banco de dados. O “modelo” é a tabela Markdown em `.ai/state.md`:
 
 ### 2026-07-26 — Comandos `sync`/`reject` e fechamento de gaps dos runbooks
 **Contexto:** Validação do kit mostrou agents incompletos e ausência de CLI para retrocesso e sincronização de specs.
-**Decisão:** Adicionar `./devkit sync` e `./devkit reject`; alinhar PM/QA/Developer/Squad Lead e skill TDD (spec ativa + Gherkin + code-review).
+**Decisão:** Adicionar `./jojo sync` e `./jojo reject`; alinhar PM/QA/Developer/Squad Lead e skill TDD (spec ativa + Gherkin + code-review).
 **Alternativas consideradas:** Edição manual de `state.md` → frágil e proibida pela regra absoluta.
 **Trade-offs:** Ganha-se: fluxo reversível e sync programático / Perde-se: superfície de comandos um pouco maior.
 **Consequências:** QA/PM usam `reject` em falha; Squad Lead usa `sync` na abertura de sessão.
 
 ### 2026-07-26 — Sanitização no `init` e baseline técnica do meta-repo
 **Contexto:** Desenvolver o kit neste repositório e copiá-lo via `init` sem poluir o app-alvo com specs, ADRs e BDD do meta-produto.
-**Decisão:** `init` copia a estrutura e em seguida reaplica um slate limpo (SPEC-000, technical-spec esqueleto, features placeholder, CHANGELOG/README de docs mínimos). O `technical-spec.md` deste repositório documenta o DevKit; nos alvos volta ao esqueleto.
+**Decisão:** `init` copia a estrutura e em seguida reaplica um slate limpo (SPEC-000, technical-spec esqueleto, features placeholder, CHANGELOG/README de docs mínimos). O `technical-spec.md` deste repositório documenta o jojo-ai; nos alvos volta ao esqueleto.
 **Alternativas consideradas:** Manter cópia bit-a-bit → polui projetos. Dois diretórios `template/` vs `product/` → complexidade extra.
 **Trade-offs:** Ganha-se: meta-repo e projetos-alvo desacoplados / Perde-se: `init` deixa de ser um `cp -R` puro.
 **Consequências:** Melhorias no kit (agents, CLI, skills) continuam sendo copiadas; rastro de features do meta-repo não.
 
 ### 2026-07-18 — CLI Python stdlib-only
 **Contexto:** Precisar de uma CLI portável sem instalar dependências no projeto-alvo.
-**Decisão:** Implementar `./devkit` em Python 3 usando apenas a biblioteca padrão.
+**Decisão:** Implementar `./jojo` em Python 3 usando apenas a biblioteca padrão.
 **Alternativas consideradas:** Node/Go → exige toolchain extra no alvo.
 **Trade-offs:** Ganha-se: zero setup / Perde-se: tipagem e empacotamento modernos.
 **Consequências:** Qualquer máquina com Python 3 roda o kit.
@@ -156,5 +156,5 @@ Não há banco de dados. O “modelo” é a tabela Markdown em `.ai/state.md`:
 
 | Versão | Data | Mudança |
 |--------|------|---------|
-| 1.0 | 2026-07-26 | Baseline técnica do produto DevKit-AI e política de sanitização do `init` |
+| 1.0 | 2026-07-26 | Baseline técnica do produto jojo-ai e política de sanitização do `init` |
 | 0.1 | 2026-07-18 | Esqueleto inicial do repositório |

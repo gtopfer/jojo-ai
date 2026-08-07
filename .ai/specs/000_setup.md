@@ -2,12 +2,12 @@
 
 ## 1. Contexto & Valor de Negócio
 - **Como um(a)** desenvolvedor(a) ou time que usa assistentes de IA para codar
-- **Eu quero** uma estrutura DevKit-AI pronta na raiz do repositório
-- **Para que** o fluxo spec-driven (PM → Architect → QA → Developer) e a CLI `./devkit` estejam disponíveis desde o primeiro dia
+- **Eu quero** uma estrutura jojo-ai pronta na raiz do repositório
+- **Para que** o fluxo spec-driven (PM → Architect → QA → Developer) e a CLI `./jojo` estejam disponíveis desde o primeiro dia
 
 ## 2. Requisitos & Restrições
 - Requisito 1: Existir o diretório `.ai/` com instruções globais, state tracker, template de specs, technical-spec, agents, skills, guidelines e pasta `specs/`
-- Requisito 2: Existir a CLI executável `./devkit` com `init`, `propose`, `hotfix`, `status`, `sync`, `activate`, `approve`, `reject`, `review`, `doctor`, `log` e `help`
+- Requisito 2: Existir a CLI executável `./jojo` com `init`, `propose`, `hotfix`, `status`, `sync`, `activate`, `approve`, `reject`, `review`, `doctor`, `log` e `help`
 - Requisito 3: Existir pontos de entrada de contexto para IAs (`CLAUDE.md`, `GEMINI.md`) apontando para a rotina de inicialização
 - Requisito 4: Existir `docs/README.md` e `docs/CHANGELOG.md` para documentação de entregas
 - Requisito 5: A stack de produto do app-alvo permanece `_(a definir)_` até a primeira feature real passar pelo Architect

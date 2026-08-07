@@ -128,7 +128,7 @@ Preencha o que impacta experiência (o Architect detalha o resto na tech-spec):
 
 ## 5. Checklist rápido (feature com UI)
 
-Antes de `./devkit approve` na fase UX:
+Antes de `./jojo approve` na fase UX:
 
 - [ ] Alinhado a este arquivo (tokens, nav, forms, feedback)  
 - [ ] Estados loading / empty / error / success definidos  

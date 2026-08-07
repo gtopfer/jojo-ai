@@ -1,12 +1,12 @@
 # Skill: Loop Autônomo e Autocorreção
 
-> **Usado por**: Developer em `test_red` (e qualquer agente que corrija falhas de `./devkit review`).  
+> **Usado por**: Developer em `test_red` (e qualquer agente que corrija falhas de `./jojo review`).  
 > **Objetivo**: maximizar progresso com feedback real, sem loop infinito de tokens.
 
 ## Quando usar
 
 - Após escrever ou alterar código.  
-- Quando `./devkit review` ou a suíte de testes falha.  
+- Quando `./jojo review` ou a suíte de testes falha.  
 - Depois de um `reject` que devolveu a spec a `test_red`.
 
 ## O ciclo (ordem fixa)
@@ -14,7 +14,7 @@
 ```
 1. PLANEJAR    → o que deve mudar? quais arquivos? qual teste prova?
 2. ESCREVER    → menor mudança correta
-3. EXECUTAR    → ./devkit review  (e runner da stack se o review não cobrir tudo)
+3. EXECUTAR    → ./jojo review  (e runner da stack se o review não cobrir tudo)
 4. AVALIAR     → APROVADO? avança. REPROVADO? classifique a falha
 5. CORRIGIR    → uma causa raiz por vez
 6. (opcional) REFATORAR → só com verde; re-rode o review
@@ -39,7 +39,7 @@ Nunca pule **EXECUTAR**. “Compila na minha cabeça” não conta.
 1. Leia a **primeira** falha relevante do log (não a última de uma cascata se possível).  
 2. Identifique **um** arquivo e **uma** causa.  
 3. Aplique o patch mínimo.  
-4. Rode `./devkit review` de novo.  
+4. Rode `./jojo review` de novo.  
 5. Se a mesma causa falhar de novo, registre tentativa #N e mude a hipótese — não repita o mesmo patch.
 
 ### Contador de tentativas
@@ -75,9 +75,9 @@ Pergunta / decisão necessária:
 ## Depois do verde
 
 1. Refatore se o código ficou feio **sem** mudar comportamento.  
-2. Rode `./devkit review` outra vez.  
+2. Rode `./jojo review` outra vez.  
 3. Passe pelo checklist de `.ai/skills/code-review.md`.  
-4. Só então `./devkit approve`.
+4. Só então `./jojo approve`.
 
 ## Anti-padrões
 

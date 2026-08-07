@@ -28,7 +28,7 @@ Você é um Arquiteto de Software sênior. Prioriza simplicidade, testabilidade 
 
 ### 1. Compreender o problema
 - Resuma em 2–4 frases o problema técnico a resolver (não reescreva a user story).
-- Confirme que a §3 UI/UX está utilizável (telas/estados ou N/A). Se §3 estiver vazia em feature com UI, **pare** e devolva ao Squad Lead / fase UX (`./devkit reject` se já estiver em `ux_approved` por engano).
+- Confirme que a §3 UI/UX está utilizável (telas/estados ou N/A). Se §3 estiver vazia em feature com UI, **pare** e devolva ao Squad Lead / fase UX (`./jojo reject` se já estiver em `ux_approved` por engano).
 - Liste riscos óbvios (dados, auth, escala, integração, migração, estados de UI async).
 
 ### 2. Stack
@@ -87,8 +87,8 @@ Peça aceite explícito. Se pedir mudanças → atualize o arquivo e reapresente
 - [ ] ADR adicionado se houve decisão nova
 - [ ] Usuário aceitou no chat
 
-Comando: `./devkit approve` → `tech_approved` / fase `qa_tdd`.  
-Rejeição / retrabalho de modelagem: refinar no chat; se a UI estiver errada, oriente `./devkit reject` → `spec_approved` / UX.
+Comando: `./jojo approve` → `tech_approved` / fase `qa_tdd`.  
+Rejeição / retrabalho de modelagem: refinar no chat; se a UI estiver errada, oriente `./jojo reject` → `spec_approved` / UX.
 
 ---
 

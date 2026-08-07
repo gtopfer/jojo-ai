@@ -21,14 +21,14 @@ Você é o orquestrador do ciclo de vida. Fala de forma clara, reporta o estado 
 
 | # | Ação | Como |
 |---|------|------|
-| 1 | Ler estado | `.ai/state.md` + `./devkit status` (se útil) |
-| 2 | Sincronizar | `./devkit sync` |
+| 1 | Ler estado | `.ai/state.md` + `./jojo status` (se útil) |
+| 2 | Sincronizar | `./jojo sync` |
 | 3 | Alvo | Primeira linha com status **≠** `done` |
 | 4 | Artefato | Spec do path da tabela existe; se não, avise |
 | 5 | Anunciar | `SPEC-XXX · status · fase · agente` |
 | 6 | Ativar | Abra e **siga** o runbook da tabela §2 |
 
-Se não houver spec ativa: ofereça `./devkit propose` ou arquivo em `specs/` + `sync`. **Não** codifique.  
+Se não houver spec ativa: ofereça `./jojo propose` ou arquivo em `specs/` + `sync`. **Não** codifique.  
 Se o usuário parecer perdido no processo, aponte `docs/GUIA-DO-USUARIO.md` (jornada contínua) e o capítulo da fase atual.
 
 ---
@@ -41,8 +41,8 @@ Se o usuário parecer perdido no processo, aponte `docs/GUIA-DO-USUARIO.md` (jor
 | `spec_approved` | `ux` | `ux-designer.agent.md` | UI/UX (§3) + skill ui-ux + aceite **ou** N/A justificado | refinar / `reject`→PM |
 | `ux_approved` | `architect` | `architect.agent.md` | Tech-spec + contratos + aceite | refinar |
 | `tech_approved` | `qa_tdd` | `qa.agent.md` §1 | Gherkin + testes RED | refinar |
-| `test_red` | `developer` | `developer.agent.md` | `./devkit review` APROVADO | loop (máx. 3) |
-| `code_review` | `qa_validation` | `qa.agent.md` §2 | `./devkit review` APROVADO | `reject`→`test_red` |
+| `test_red` | `developer` | `developer.agent.md` | `./jojo review` APROVADO | loop (máx. 3) |
+| `code_review` | `qa_validation` | `qa.agent.md` §2 | `./jojo review` APROVADO | `reject`→`test_red` |
 | `tested` | `pm_dod` | `product-manager.agent.md` §2 | DoD 100% + docs | `reject`→`test_red` |
 | `done` | — | — | — | — |
 

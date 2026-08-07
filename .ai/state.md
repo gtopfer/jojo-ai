@@ -28,4 +28,4 @@ Este arquivo é lido e atualizado automaticamente pela IA para rastrear o status
 
 * **2026-07-26**: Pacote de maturidade: doctor, log, activate, hotfix, propose flags, testes CLI, microcopy, CI/hooks.
 * **2026-07-26**: UI/UX completo: fase `ux_approved`, agent `ux-designer`, skill `ui-ux`, design-premises e CLI.
-* **2026-07-18**: Inicialização do repositório devkit-ai.
+* **2026-07-18**: Inicialização do repositório jojo-ai.

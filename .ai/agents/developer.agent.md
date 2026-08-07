@@ -1,6 +1,6 @@
 ---
 name: Developer
-description: Implementa em `test_red` até o harness passar e `./devkit review` = APROVADO.
+description: Implementa em `test_red` até o harness passar e `./jojo review` = APROVADO.
 ---
 
 > **Fase**: `test_red` (`developer`).  
@@ -47,7 +47,7 @@ Você é um Desenvolvedor sênior full-stack. Implementa o **mínimo correto** p
 Siga `.ai/skills/autonomous-loop.md`:
 
 ```
-Planejar → Escrever → ./devkit review → Avaliar → Refatorar
+Planejar → Escrever → ./jojo review → Avaliar → Refatorar
 ```
 
 - **Máximo 3 tentativas** na mesma causa raiz.
@@ -56,12 +56,12 @@ Planejar → Escrever → ./devkit review → Avaliar → Refatorar
 ### 4. Code review programático + manual
 
 1. Checklist de `.ai/skills/code-review.md` (automático + diff manual).
-2. `./devkit review` **deve** retornar APROVADO (exit 0).
+2. `./jojo review` **deve** retornar APROVADO (exit 0).
 3. Anexe a saída do review na resposta final.
 
 ### 5. Finalizar
 
-- Rode `./devkit approve` → `code_review` (QA validação).
+- Rode `./jojo approve` → `code_review` (QA validação).
 - Resuma: arquivos tocados, comportamento coberto, riscos residuais (se houver).
 
 ---
@@ -69,7 +69,7 @@ Planejar → Escrever → ./devkit review → Avaliar → Refatorar
 ## Gate para `approve`
 
 - [ ] Testes da feature verdes
-- [ ] `./devkit review` APROVADO
+- [ ] `./jojo review` APROVADO
 - [ ] Checklist code-review (manual) ok
 - [ ] Escopo limitado à spec (sem “já que estamos aqui…”)
 - [ ] Sem TODOs/FIXME em código novo
@@ -105,5 +105,5 @@ Planejar → Escrever → ./devkit review → Avaliar → Refatorar
 Review: APROVADO
 Arquivos: ...
 Como validar: <comando de teste / fluxo manual mínimo>
-Próximo: ./devkit approve  (já executado se você rodou)
+Próximo: ./jojo approve  (já executado se você rodou)
 ```

@@ -1,7 +1,7 @@
 # Skill: Code Review (programático + manual)
 
-> **Usado por**: Developer (antes de sair de `test_red`); QA (fase `code_review`); qualquer um que rode `./devkit review`.  
-> **Gate do kit**: sem esta skill cumprida, **não** há `./devkit approve` em `test_red` → `code_review`.
+> **Usado por**: Developer (antes de sair de `test_red`); QA (fase `code_review`); qualquer um que rode `./jojo review`.  
+> **Gate do kit**: sem esta skill cumprida, **não** há `./jojo approve` em `test_red` → `code_review`.
 
 ## Quando usar
 
@@ -14,7 +14,7 @@
 Na **raiz do repositório**:
 
 ```bash
-./devkit review
+./jojo review
 ```
 
 O comando deve terminar com **APROVADO** e código de saída `0`.
@@ -32,10 +32,10 @@ Ele tipicamente verifica:
 
 1. Leia o trecho de log (não chute).  
 2. Corrija a causa raiz no arquivo certo.  
-3. Rode `./devkit review` de novo.  
+3. Rode `./jojo review` de novo.  
 4. Integre com `.ai/skills/autonomous-loop.md` (máx. 3 tentativas na mesma causa).
 
-**Não** rode `./devkit approve` com review vermelho.
+**Não** rode `./jojo approve` com review vermelho.
 
 ## Parte B — Revisão manual do diff (obrigatória)
 
@@ -77,10 +77,10 @@ Olhe o diff dos arquivos da feature (`git diff` / status). Checklist:
 
 | Resultado | Quem | Ação |
 |-----------|------|------|
-| APROVADO (A+B) | Developer | `./devkit approve` → QA |
+| APROVADO (A+B) | Developer | `./jojo approve` → QA |
 | REPROVADO (A ou B) | Developer | Corrigir ou escalar |
-| APROVADO (A+B) | QA | `./devkit approve` → PM DoD |
-| REPROVADO | QA | `./devkit reject` → Developer |
+| APROVADO (A+B) | QA | `./jojo approve` → PM DoD |
+| REPROVADO | QA | `./jojo reject` → Developer |
 
 ## Anti-padrões
 
@@ -93,6 +93,6 @@ Olhe o diff dos arquivos da feature (`git diff` / status). Checklist:
 
 ```text
 [Code Review] APROVADO | REPROVADO
-CLI: ./devkit review → ...
+CLI: ./jojo review → ...
 Manual: N itens ok / lista de achados
 ```

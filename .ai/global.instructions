@@ -10,8 +10,8 @@ Toda e qualquer alteração de código ou documentação é governada por especi
 Toda vez que uma nova interação ou sessão for iniciada, a IA deve:
 1. **Ler o painel de controle** `.ai/state.md` e escanear a pasta `.ai/specs/` para sincronizar o estado.
 2. **Detectar novas specs ou alterações**:
-   - Rode `./devkit sync` para registrar arquivos novos em `.ai/specs/` como `draft` (fase `pm`).
-   - Se uma especificação existente no `.ai/state.md` foi modificada recentemente pelo usuário de forma que invalide fases posteriores, use `./devkit reject` (ou reabra o ciclo) e notifique o usuário — prefira a CLI a editar `state.md` à mão.
+   - Rode `./jojo sync` para registrar arquivos novos em `.ai/specs/` como `draft` (fase `pm`).
+   - Se uma especificação existente no `.ai/state.md` foi modificada recentemente pelo usuário de forma que invalide fases posteriores, use `./jojo reject` (ou reabra o ciclo) e notifique o usuário — prefira a CLI a editar `state.md` à mão.
 3. **Identificar a tarefa ativa**: Encontre a primeira especificação não finalizada (status diferente de `done`).
 4. **Acionar o Squad Lead**: Chamar `.ai/agents/squad-lead.agent.md` passando a especificação ativa para que ele orquestre as fases de acordo com o status atual.
 
@@ -21,7 +21,7 @@ Toda vez que uma nova interação ou sessão for iniciada, a IA deve:
 
 O fluxo orquestrado pelo Squad Lead reage aos status no `.ai/state.md`:
 
-| Status Atual | Fase Ativa (runbook) | Ação Executada | Próximo Status (pós-`./devkit approve`) |
+| Status Atual | Fase Ativa (runbook) | Ação Executada | Próximo Status (pós-`./jojo approve`) |
 |--------------|----------------------|----------------|------------------------------------------|
 | `draft` | **PM** (`pm`) | Detalha a spec com DoR/DoD (modelo em `.ai/template.specs`) e aguarda aprovação humana | `spec_approved` |
 | `spec_approved` | **UX** (`ux`) | Fluxos, estados de UI, design system e §3 da spec (skill `.ai/skills/ui-ux.md`) | `ux_approved` |

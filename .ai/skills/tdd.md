@@ -1,7 +1,7 @@
 # Skill: TDD (Test-Driven Development)
 
 > **Usado por**: QA (fase `tech_approved`) e Developer (respeita RED→GREEN→REFACTOR).  
-> **Comando de verdade do kit**: a suíte local + `./devkit review` no fechamento.
+> **Comando de verdade do kit**: a suíte local + `./jojo review` no fechamento.
 
 ## Quando usar
 
@@ -23,7 +23,7 @@ GREEN   → implemente o mínimo para passar
 REFACTOR→ limpe sem mudar comportamento; mantenha verde
 ```
 
-Repita por fatia vertical (um cenário/requisito por vez). Não escreva a suíte inteira e depois o sistema inteiro se a fatia for grande demais para feedback rápido — mas na fase QA do DevKit a suíte RED completa da feature é o entregável antes do Dev.
+Repita por fatia vertical (um cenário/requisito por vez). Não escreva a suíte inteira e depois o sistema inteiro se a fatia for grande demais para feedback rápido — mas na fase QA do jojo-ai a suíte RED completa da feature é o entregável antes do Dev.
 
 ## Derivação (checklist)
 
@@ -60,7 +60,7 @@ Espelhe o código: `src/domain/pricing.ts` → `tests/domain/pricing.spec.ts` (o
 
 ## Prova de RED (obrigatória na fase QA)
 
-Antes de `./devkit approve` em `tech_approved`:
+Antes de `./jojo approve` em `tech_approved`:
 
 1. Rode a suíte.  
 2. Novos testes **falham**.  

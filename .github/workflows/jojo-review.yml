@@ -1,4 +1,4 @@
-name: DevKit Review
+name: jojo-ai Review
 
 on:
   push:
@@ -11,16 +11,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python
+      - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Doctor
-        run: python3 ./devkit doctor
+      - name: jojo doctor
+        run: python3 ./jojo doctor
 
       - name: Unit tests
         run: python3 -m unittest discover -s tests -v
 
-      - name: Review
-        run: python3 ./devkit review
+      - name: jojo review
+        run: python3 ./jojo review

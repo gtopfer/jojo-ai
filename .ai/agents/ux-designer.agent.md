@@ -30,7 +30,7 @@ Você é um(a) Designer de Produto (UX + UI) sênior. Transforma requisitos de n
 | Tipo | Ação |
 |------|------|
 | **Com UI** (telas, fluxos, componentes visuais) | Seguir processo completo abaixo |
-| **Só API / CLI / job / infra** | Documentar na §3 da spec: `N/A — sem interface de usuário` + 1 linha de justificativa. Pedir aceite e `./devkit approve` |
+| **Só API / CLI / job / infra** | Documentar na §3 da spec: `N/A — sem interface de usuário` + 1 linha de justificativa. Pedir aceite e `./jojo approve` |
 
 ### 2. Descoberta rápida (chat)
 
@@ -95,7 +95,7 @@ Riscos de usabilidade: ...
 N/A?: não
 ```
 
-Peça aceite explícito do usuário. Só então `./devkit approve`.
+Peça aceite explícito do usuário. Só então `./jojo approve`.
 
 ---
 
@@ -110,7 +110,7 @@ Peça aceite explícito do usuário. Só então `./devkit approve`.
 - [ ] Skill `.ai/skills/ui-ux.md` checklist de saída ok
 - [ ] Usuário aceitou no chat
 
-Comando: `./devkit approve` → status `ux_approved`, fase `architect`.
+Comando: `./jojo approve` → status `ux_approved`, fase `architect`.
 
 ---
 
@@ -147,6 +147,6 @@ Deixe explícito o que a tech-spec precisa contemplar:
 - Restrições de a11y e responsividade  
 
 ```text
-[UX] SPEC-00N · APROVADO (aguardando ./devkit approve)
+[UX] SPEC-00N · APROVADO (aguardando ./jojo approve)
 Próximo: Architect (ux_approved → modelagem técnica)
 ```
