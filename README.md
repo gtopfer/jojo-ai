@@ -9,7 +9,7 @@
 │  ╚════╝  ╚═════╝  ╚════╝  ╚═════╝                │
 │                    · a i ·                       │
 │                                                  │
-│     ★  spec  →  design  →  ship  ★               │
+│     ★  init  →  features  →  run  ★              │
 │        agentes com régua · você no controle      │
 │                                                  │
 └──────────────────────────────────────────────────┘
@@ -19,21 +19,36 @@
 
 SPECKIT minimalista para agentes de IA.
 
-**Você edita só isto na raiz:**
+## Dois comandos
+
+```bash
+# 1) Instala OU atualiza o kit no projeto (detecta versão antiga sozinho)
+./jojo init /caminho/do/seu-projeto
+#    se já tiver jojo: remove kit/CLI gerenciados e reinstala; preserva agents.md
+
+# 2) Lê agents.md → ### Features e mostra a próxima a implementar
+cd /caminho/do/seu-projeto
+./jojo run
+
+# extra
+./jojo detect .    # jojo já instalado? qual versão?
+```
+
+No chat do Grok (skills do projeto):
+
+- **`/jojo-init`** — instala dependências/kit no repo  
+- **`/jojo-run`** — mapeia features pendentes e começa o loop  
+
+## Você edita na raiz
 
 | arquivo | pra quê |
 | --- | --- |
-| [`agents.md`](./agents.md) | produto + processo |
+| [`agents.md`](./agents.md) | projeto + **`### Features`** (backlog) |
 | [`system-design.md`](./system-design.md) | arquitetura + design system |
-| [`CHANGELOG.md`](./CHANGELOG.md) | feito vs. falta |
+| [`CHANGELOG.md`](./CHANGELOG.md) | histórico (agentes atualizam) |
 
-O resto mora em [`kit/`](./kit/) (agents, skills, scripts). Detalhes do kit: [`kit/README.md`](./kit/README.md).
+Fluxo: escreve feature em `agents.md` → `./jojo run` → IA pede OK → implementa.
 
-```bash
-# 1) preencha agents.md + system-design.md
-# 2) abra seu agente de IA e diga: "siga agents.md"
-# (opcional, agentes/CI)
-cd kit && npm run sync
-```
+Kit interno: [`kit/`](./kit/). CLI: [`jojo`](./jojo).
 
 **Licença:** [GPL-3.0](./LICENSE)

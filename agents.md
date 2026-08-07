@@ -6,15 +6,22 @@ Régua universal + Especificação do Projeto.
 
 ## 🎯 Como Usar (humano)
 
-1. Preencha **Seção 1** (projeto + **Features**)
-2. Preencha **`system-design.md`** (arquitetura / design system)
-3. Diga à IA: **"siga agents.md"**
-4. A IA lê as Features abaixo, mapeia e começa o loop (com seu OK no chat)
+### Em um projeto novo
 
-**Onde escrever a NOVA FEATURE:**  
-→ **Seção 1 → `### Features`** (lista com `- [ ]` / `- [x]`)
+```bash
+# a partir deste repo (fonte do kit)
+./jojo init /caminho/do/seu-projeto
+cd /caminho/do/seu-projeto
+```
 
-Não precisa criar arquivo em outro lugar para “pedir” a feature. A IA mapeia dali.
+### Todo dia
+
+1. Escreva features em **Seção 1 → `### Features`** (`- [ ] ...`)
+2. Preencha **`system-design.md`** (se ainda não)
+3. Rode **`./jojo run`** ou no chat **`/jojo-run`**
+4. A IA mapeia a primeira `- [ ]`, pede OK e implementa
+
+**Onde escrever a NOVA FEATURE:** só em **`### Features`** (abaixo).
 
 ---
 
@@ -51,23 +58,12 @@ Não precisa criar arquivo em outro lugar para “pedir” a feature. A IA mapei
 
 ### Features
 
-> **VOCÊ ESCREVE A FEATURE AQUI.**  
-> A IA usa esta lista como backlog: pega o primeiro `- [ ]`, mapeia, pede OK e entra no ciclo (spec → UX → arch → TDD → código).
+> **VOCÊ ESCREVE A FEATURE AQUI** (só linhas `- [ ]` / `- [x]` contam para o `./jojo run`).  
+> Comandos: `./jojo init` (instala kit) · `./jojo run` (próxima feature) · skills `/jojo-init` `/jojo-run`
 
-- [ ] refatoracao completa do codigo para usar o duck pattern.
+**Backlog:**
 
-**Como escrever (um item por feature):**
-
-```markdown
-- [ ] Título curto — o que o usuário ganha (1 linha). Detalhe opcional: quem usa, regra importante, fora de escopo.
-- [x] Feature já entregue (a IA marca [x] quando done)
-```
-
-**Backlog (edite isto):**
-
-- [ ] [Exemplo] Login com e-mail e senha — usuário entra e vê a home
-- [ ] [Exemplo] Listar produtos — catálogo com busca por nome
-- [ ] CLI `./jojo` — status, approve, reject, review, sync
+- [ ] refatoracao completa do codigo para usar o duck pattern
 
 ---
 
