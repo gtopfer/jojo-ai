@@ -30,21 +30,21 @@ Agentes e skills **devem ler `system-design.md`** antes de designar arquitetura 
 
 ### Tier 1 — Estrutura de skills
 
-- [x] Frontmatter YAML em `docs/skills/*`
+- [x] Frontmatter YAML em `kit/docs/skills/*`
 - [x] Types/categories (`development`, `design`, `architecture`, …)
-- [x] `scripts/generate-registry.js` → `skills-registry.json`
+- [x] `kit/scripts/generate-registry.js` → `skills-registry.json`
 - [x] `npm run generate:registry`
 
 ### Tier 2 — Qualidade
 
-- [x] `docs/skill-validator.md` + `scripts/validate-skills.js`
+- [x] `docs/skill-validator.md` + `kit/scripts/validate-skills.js`
 - [x] `requiredKnowledge`, `appliesTo`, `conflicts` no frontmatter
 - [x] Seções **Quando usar** / **Quando NÃO usar** nas skills
 - [x] `npm run validate:skills`
 
 ### Tier 3 — Project context + system design
 
-- [x] `scripts/generate-context.js` lê **Seção 1 de agents.md**
+- [x] `kit/scripts/generate-context.js` lê **Seção 1 de agents.md**
 - [x] Emite `project-context.json` (stack, users, guardrails + pointer `system-design.md`)
 - [x] **`system-design.md`** dedicado por projeto (arquitetura §2 + design system §3)
 - [x] Agents/skills apontam para `system-design.md` (não guidelines soltas)

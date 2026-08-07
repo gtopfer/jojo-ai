@@ -114,6 +114,8 @@ draft → spec_approved → ux_approved → tech_approved → test_red → code_
 - `kit/docs/skills/code-review.md`
 - `kit/docs/skills/ui-ux.md`
 - `kit/docs/skills/ducks-pattern.md`
+- `kit/docs/skills/autonomous-loop.md`
+- `kit/docs/skills/microcopy.md`
 
 Discovery: `kit/docs/recommendations.json` — humano **não** configura.
 

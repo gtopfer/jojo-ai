@@ -1,8 +1,32 @@
 {
   "version": "1.0",
-  "generated": "2026-08-07T15:32:47.319Z",
+  "generated": "2026-08-07T15:39:37.058Z",
   "sourceOfTruth": "kit/docs/skills/*.md (agents only; humans edit agents.md + system-design.md + CHANGELOG.md)",
   "skills": [
+    {
+      "id": "autonomous-loop",
+      "name": "Autonomous Loop",
+      "type": "development",
+      "category": "quality",
+      "description": "Self-heal loop with max 3 attempts per root cause after review failures",
+      "usedFor": [
+        "code",
+        "fix",
+        "review"
+      ],
+      "appliesTo": [
+        "backend",
+        "frontend"
+      ],
+      "requiredKnowledge": [
+        "debugging",
+        "testing"
+      ],
+      "conflicts": [],
+      "mandatory": false,
+      "path": "kit/docs/skills/autonomous-loop.md",
+      "hash": "sha256:013ae242da96"
+    },
     {
       "id": "code-review",
       "name": "Code Review",
@@ -28,7 +52,7 @@
       ],
       "mandatory": false,
       "path": "kit/docs/skills/code-review.md",
-      "hash": "sha256:ff507dac3fb5"
+      "hash": "sha256:a1c07cfc905a"
     },
     {
       "id": "ducks-pattern",
@@ -54,6 +78,29 @@
       "mandatory": true,
       "path": "kit/docs/skills/ducks-pattern.md",
       "hash": "sha256:56945a9f298c"
+    },
+    {
+      "id": "microcopy",
+      "name": "Microcopy",
+      "type": "design",
+      "category": "design",
+      "description": "UI content design — CTAs, errors, empty states, labels",
+      "usedFor": [
+        "ui",
+        "ux",
+        "microcopy"
+      ],
+      "appliesTo": [
+        "frontend"
+      ],
+      "requiredKnowledge": [
+        "ux-writing",
+        "accessibility"
+      ],
+      "conflicts": [],
+      "mandatory": false,
+      "path": "kit/docs/skills/microcopy.md",
+      "hash": "sha256:8366682338b7"
     },
     {
       "id": "tdd",

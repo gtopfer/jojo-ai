@@ -21,22 +21,22 @@ Não há cronograma, não há fases de tempo. Apenas:
 
 ```
 Agent-Skills
-├─ Responsável por: docs/skills/, scripts/generate-registry.js
+├─ Responsável por: kit/docs/skills/, kit/scripts/generate-registry.js
 ├─ Lê: agents.md + IMPROVEMENT-PLAN.md (Tier 1)
 └─ Trabalha em paralelo: Sim (domínio isolado)
 
 Agent-Context
-├─ Responsável por: .ai/guidelines/, scripts/generate-context.js
+├─ Responsável por: .ai/guidelines/, kit/scripts/generate-context.js
 ├─ Lê: agents.md + IMPROVEMENT-PLAN.md (Tier 3)
 └─ Trabalha em paralelo: Sim (domínio isolado)
 
 Agent-Discovery
-├─ Responsável por: docs/agents/, scripts/recommendation-*.js
+├─ Responsável por: kit/docs/agents/, kit/scripts/recommendation-*.js
 ├─ Lê: agents.md + IMPROVEMENT-PLAN.md (Tier 4)
 └─ Trabalha em paralelo: Sim (domínio isolado)
 
 Agent-Testing
-├─ Responsável por: tests/, scripts/validate-*.js
+├─ Responsável por: tests/, kit/scripts/validate-*.js
 ├─ Lê: agents.md + IMPROVEMENT-PLAN.md (todos os tiers)
 └─ Trabalha em paralelo: Sim (testa tudo)
 
@@ -86,10 +86,10 @@ Se não OK: Volta para trabalhar
 ### Sem Conflitos
 
 ```
-Agent-Skills edita:        docs/skills/*, scripts/generate-registry.js
-Agent-Context edita:       .ai/guidelines/*, scripts/generate-context.js
-Agent-Discovery edita:     docs/agents/*, scripts/recommendation-*.js
-Agent-Testing edita:       tests/*, scripts/validate-*.js
+Agent-Skills edita:        kit/docs/skills/*, kit/scripts/generate-registry.js
+Agent-Context edita:       .ai/guidelines/*, kit/scripts/generate-context.js
+Agent-Discovery edita:     kit/docs/agents/*, kit/scripts/recommendation-*.js
+Agent-Testing edita:       tests/*, kit/scripts/validate-*.js
 Agent-Docs edita:          agents.md, README.md, templates/
 Agent-Review:              Reviews (não edita exceto merge)
 
@@ -202,8 +202,8 @@ git push origin feat/seu-dominio
 ### Agent-Skills: Tier 1 - Skills Metadata
 
 **Edita:**
-- `docs/skills/*.md` — Add YAML frontmatter
-- `scripts/generate-registry.js` — Create registry generator
+- `kit/docs/skills/*.md` — Add YAML frontmatter
+- `kit/scripts/generate-registry.js` — Create registry generator
 - `docs/skill-types.json` — Define types/categories
 
 **Não edita:** Nenhum outro arquivo
@@ -216,7 +216,7 @@ git push origin feat/seu-dominio
 
 **Edita:**
 - `.ai/guidelines/` — Define stack, conventions, guardrails schemas
-- `scripts/generate-context.js` — Create context generator
+- `kit/scripts/generate-context.js` — Create context generator
 - `schemas/project-context.json` — JSON schema
 
 **Não edita:** Nenhum outro arquivo
@@ -228,8 +228,8 @@ git push origin feat/seu-dominio
 ### Agent-Discovery: Tier 4 - Agent Discovery
 
 **Edita:**
-- `docs/agents/` — Agent profiler, definitions
-- `scripts/recommendation-engine.js` — Recommendation logic
+- `kit/docs/agents/` — Agent profiler, definitions
+- `kit/scripts/recommendation-engine.js` — Recommendation logic
 - Integração com skills + context
 
 **Não edita:** Nenhum outro arquivo
@@ -242,7 +242,7 @@ git push origin feat/seu-dominio
 
 **Edita:**
 - `tests/` — Test files
-- `scripts/validate-*.js` — Validators
+- `kit/scripts/validate-*.js` — Validators
 - `.github/workflows/` — CI/CD
 
 **Testa:** Output de todos os outros agentes

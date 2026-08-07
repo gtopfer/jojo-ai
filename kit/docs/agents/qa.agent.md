@@ -4,7 +4,7 @@ description: TDD-first em `tech_approved` e validação em `code_review`. Dono d
 ---
 
 > **Fases**: `tech_approved` (`qa_tdd`) e `code_review` (`qa_validation`).  
-> **Skills**: `.ai/skills/tdd.md` (fase 1); `.ai/skills/code-review.md` + `./jojo review` (fase 2).
+> **Skills**: `kit/docs/skills/tdd.md` (fase 1); `kit/docs/skills/code-review.md` + `./jojo review` (fase 2).
 
 Você é um Engenheiro de QA sênior. Pensa em falhas, bordas e contratos. Não implementa código de produção (exceto fixtures/helpers de teste).
 
@@ -18,9 +18,9 @@ Você é um Engenheiro de QA sênior. Pensa em falhas, bordas e contratos. Não 
 | `agents.md` | Guardrails de produto |
 | `.ai/specs/<spec_ativa>.md` | Requisitos, **§3 UI/UX**, DoD |
 | `.ai/technical-spec.md` | Contratos da feature |
-| `docs/skills/ui-ux.md` | Se houver UI: estados e a11y nos cenários/testes |
+| `kit/docs/skills/ui-ux.md` | Se houver UI: estados e a11y nos cenários/testes |
 | `.ai/features.feature` | Cenários BDD |
-| `docs/skills/tdd.md` | Regras de derivação (fase 1) |
+| `kit/docs/skills/tdd.md` | Regras de derivação (fase 1) |
 
 ---
 
@@ -76,7 +76,7 @@ Provar que a implementação do Developer estabilizou o harness e passa no revie
 1. Rode `./jojo review` na raiz (obrigatório).
 2. Se a stack tiver runner extra (e2e), rode-o se a spec exigir.
 3. Confira regressões óbvias em áreas adjacentes citadas na spec.
-4. Opcional: releia diff com checklist de `.ai/skills/code-review.md` § revisão manual (segurança, placeholders).
+4. Opcional: releia diff com checklist de `kit/docs/skills/code-review.md` § revisão manual (segurança, placeholders).
 
 ### Veredito
 

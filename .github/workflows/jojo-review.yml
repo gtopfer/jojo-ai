@@ -6,21 +6,16 @@ on:
   pull_request:
 
 jobs:
-  review:
+  kit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          python-version: "3.12"
+          node-version: "20"
 
-      - name: jojo doctor
-        run: python3 ./jojo doctor
-
-      - name: Unit tests
-        run: python3 -m unittest discover -s tests -v
-
-      - name: jojo review
-        run: python3 ./jojo review
+      - name: Validate kit (registry + context + skills)
+        working-directory: kit
+        run: npm run sync

@@ -37,7 +37,7 @@ Entregar uma spec com DoR completo e DoD verificável, pronta para o Architect.
    - Quem usa? Em que contexto?
    - Caminho feliz e 2+ caminhos de falha
    - O que **não** está no escopo (explícito)
-   - UI/UX se houver interface (respeitando `design-premises.md`)
+   - UI/UX se houver interface (respeitando `system-design.md`)
    - Critérios observáveis de “pronto”
 4. **Escrever** a spec no arquivo (não só no chat), seções do `template.specs`:
    1. Contexto & valor  
@@ -89,13 +89,13 @@ Aceitar ou devolver a entrega com base no DoD da spec — não em gosto pessoal.
 
 | Resultado | Ação |
 |-----------|------|
-| **ENTREGA APROVADA** | Atualize `docs/CHANGELOG.md` (impacto, não implementação) e `docs/README.md` (link da spec). Oriente `./jojo approve` → `done`. |
+| **ENTREGA APROVADA** | Atualize `CHANGELOG.md` (impacto, não implementação) e `CHANGELOG.md` (link da spec). Oriente `./jojo approve` → `done`. |
 | **ENTREGA REPROVADA** | Liste pendências numeradas ligadas a requisitos/DoD. Rode `./jojo reject` → `test_red`. Não edite `state.md` à mão. |
 
 ### Gate para `approve`
 
 - [ ] Todos os itens do DoD estão `[x]`
-- [ ] CHANGELOG e índice em `docs/README.md` atualizados
+- [ ] CHANGELOG e índice em `CHANGELOG.md` atualizados
 - [ ] Nenhuma pendência de negócio aberta
 
 ### Anti-padrões

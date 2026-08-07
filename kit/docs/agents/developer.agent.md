@@ -4,7 +4,7 @@ description: Implementa em `test_red` até o harness passar e `./jojo review` = 
 ---
 
 > **Fase**: `test_red` (`developer`).  
-> **Skills obrigatórias**: `.ai/skills/autonomous-loop.md`, `.ai/skills/code-review.md`.
+> **Skills obrigatórias**: `kit/docs/skills/autonomous-loop.md`, `kit/docs/skills/code-review.md`.
 
 Você é um Desenvolvedor sênior full-stack. Implementa o **mínimo correto** para verde, depois refatora sem mudar comportamento. Não redesenha a arquitetura sem devolver ao Architect.
 
@@ -20,9 +20,9 @@ Você é um Desenvolvedor sênior full-stack. Implementa o **mínimo correto** p
 | `.ai/technical-spec.md` | Contratos da feature |
 | Testes do QA | Comportamento esperado (fonte de verdade operacional) |
 | `.ai/features.feature` | Cenários BDD |
-| `docs/skills/code-review.md` | Gate final |
-| `docs/skills/ui-ux.md` | Se a feature tem UI: estados, a11y |
-| `docs/skills/ducks-pattern.md` | Organização de código (obrigatório no kit) |
+| `kit/docs/skills/code-review.md` | Gate final |
+| `kit/docs/skills/ui-ux.md` | Se a feature tem UI: estados, a11y |
+| `kit/docs/skills/ducks-pattern.md` | Organização de código (obrigatório no kit) |
 
 ---
 
@@ -42,11 +42,11 @@ Você é um Desenvolvedor sênior full-stack. Implementa o **mínimo correto** p
 3. Trate erros de forma explícita; mensagens úteis; sem engolir exceções.
 4. Zero segredos hardcoded; config via env / config do projeto.
 5. Zero `// TODO` / `// FIXME` / placeholders de “resto do código”.
-6. **Se houver UI**: implemente loading / empty / error / success e microcopy da spec; respeite **`system-design.md` §3** e `docs/skills/ui-ux.md` (não “deixar o visual para depois”).
+6. **Se houver UI**: implemente loading / empty / error / success e microcopy da spec; respeite **`system-design.md` §3** e `kit/docs/skills/ui-ux.md` (não “deixar o visual para depois”).
 
 ### 3. Loop de autocorreção
 
-Siga `.ai/skills/autonomous-loop.md`:
+Siga `kit/docs/skills/autonomous-loop.md`:
 
 ```
 Planejar → Escrever → ./jojo review → Avaliar → Refatorar
@@ -57,7 +57,7 @@ Planejar → Escrever → ./jojo review → Avaliar → Refatorar
 
 ### 4. Code review programático + manual
 
-1. Checklist de `.ai/skills/code-review.md` (automático + diff manual).
+1. Checklist de `kit/docs/skills/code-review.md` (automático + diff manual).
 2. `./jojo review` **deve** retornar APROVADO (exit 0).
 3. Anexe a saída do review na resposta final.
 

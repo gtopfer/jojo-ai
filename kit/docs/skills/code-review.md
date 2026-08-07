@@ -49,7 +49,7 @@ Ele tipicamente verifica:
 1. Leia o trecho de log (não chute).  
 2. Corrija a causa raiz no arquivo certo.  
 3. Rode `./jojo review` de novo.  
-4. Integre com `.ai/skills/autonomous-loop.md` (máx. 3 tentativas na mesma causa).
+4. Integre com `kit/docs/skills/autonomous-loop.md` (máx. 3 tentativas na mesma causa).
 
 **Não** rode `./jojo approve` com review vermelho.
 

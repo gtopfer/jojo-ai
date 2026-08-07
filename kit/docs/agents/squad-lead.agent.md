@@ -52,10 +52,10 @@ Se o usu√°rio parecer perdido: aponte `agents.md` + `system-design.md` como os √
 
 | Fase | Skills |
 |------|--------|
-| `ux` | `.ai/skills/ui-ux.md` |
-| `qa_tdd` | `.ai/skills/tdd.md` |
-| `developer` | `.ai/skills/autonomous-loop.md` + `.ai/skills/code-review.md` (+ ui-ux se houver UI) |
-| `qa_validation` | `.ai/skills/code-review.md` |
+| `ux` | `kit/docs/skills/ui-ux.md` |
+| `qa_tdd` | `kit/docs/skills/tdd.md` |
+| `developer` | `kit/docs/skills/autonomous-loop.md` + `kit/docs/skills/code-review.md` (+ ui-ux se houver UI) |
+| `qa_validation` | `kit/docs/skills/code-review.md` |
 
 ### Fluxo feliz (CLI)
 
