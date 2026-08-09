@@ -1,19 +1,23 @@
 # CHANGELOG
 
-Rastreamento do projeto (o que foi feito vs o que falta).  
-Atualizado por agentes com aceite humano. **Fica na raiz** junto com `agents.md` e `system-design.md`.
+Rastreamento do projeto (feito vs. falta). Agentes atualizam com OK humano.
 
 ## [Unreleased]
 
 ### Implemented
-- [x] SPECKIT: `agents.md` + `system-design.md` + `CHANGELOG.md` na raiz
-- [x] Kit interno em `kit/` (agents, skills, scripts, templates)
-- [x] CLI `./jojo` com `init` + `run` (init detecta e atualiza instalação existente)
-- [x] Skills Grok `/jojo-init` e `/jojo-run`
-- [x] README mínimo com ASCII + LICENSE GPL-3.0
-- [x] Validação: paths `kit/`, 6 skills OK, CI `npm run sync`
+
+- [x] SPECKIT: `agents.md` + `system-design.md` + `CHANGELOG.md`
+- [x] CLI Python: `init` · `detect` · `run` · **`sync`** · `version` (v0.3.0)
+- [x] Backlog = `### Features` + `.ai/jojo-run.json`
+- [x] README guia CLI + runtime de agent (LLM-agnóstico) (caminhos genéricos)
+- [x] Agent Skills layout: `kit/docs/skills/<id>/SKILL.md` + progressive disclosure
+- [x] 14 skills (processo + qualidade + design + arch)
+- [x] Template `delta-spec.md`
+- [x] Squad Lead alinhado à CLI real (sem approve/review fantasmas)
+- [x] recommendations v2 · registry v2 · `./jojo sync`
+- [x] CI `npm run sync`
 
 ### To Do (Validated by Human)
-- [ ] Preencher Seção 1 de `agents.md` para o projeto real
-- [ ] Preencher `system-design.md` do projeto
-- [ ] Expandir CLI: approve / reject / review / status
+
+- [ ] Onboard real: preencher Seção 1 + system-design do produto
+- [ ] (Opcional) mais gates na CLI sem virar second brain de fases

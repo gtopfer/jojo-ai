@@ -17,5 +17,7 @@ jobs:
           node-version: "20"
 
       - name: Validate kit (registry + context + skills)
-        working-directory: kit
-        run: npm run sync
+        run: |
+          chmod +x ./jojo
+          ./jojo sync .
+

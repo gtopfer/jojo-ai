@@ -1,18 +1,15 @@
 #!/usr/bin/env node
 /**
- * Validates docs/skills/*.md against the kit skill checklist.
- * For kit maintainers / CI — not a user-facing step.
- *
- * Usage: node scripts/validate-skills.js [optional path to one skill]
+ * Validates kit/docs/skills/<id>/SKILL.md
  */
 
 const fs = require("fs");
 const path = require("path");
 const { parseFrontmatter } = require("./lib/frontmatter");
+const { listSkills, isValidSkillName } = require("./lib/skills-fs");
 
 const KIT_ROOT = path.join(__dirname, "..");
-const REPO_ROOT = path.join(KIT_ROOT, "..");
-const ROOT = KIT_ROOT; // for relative paths in messages
+const ROOT = KIT_ROOT;
 const SKILLS_DIR = path.join(KIT_ROOT, "docs", "skills");
 
 const REQUIRED_META = ["name", "type", "category", "description"];
@@ -24,6 +21,7 @@ const ALLOWED_TYPES = [
   "knowledge",
   "refinement",
   "architecture",
+  "process",
 ];
 const ALLOWED_CATEGORIES = [
   "quality",
@@ -32,6 +30,7 @@ const ALLOWED_CATEGORIES = [
   "documentation",
   "knowledge",
   "infra",
+  "process",
 ];
 
 function hasSection(body, titles) {
@@ -39,7 +38,7 @@ function hasSection(body, titles) {
   return titles.some((t) => lower.includes(t.toLowerCase()));
 }
 
-function validateFile(fullPath) {
+function validateFile(fullPath, expectedId) {
   const rel = path.relative(ROOT, fullPath);
   const content = fs.readFileSync(fullPath, "utf8");
   const { data, body, hasFrontmatter } = parseFrontmatter(content);
@@ -47,79 +46,67 @@ function validateFile(fullPath) {
   const warnings = [];
 
   if (!hasFrontmatter) {
-    errors.push("missing YAML frontmatter (--- ... ---)");
+    errors.push("missing YAML frontmatter");
     return { rel, errors, warnings };
   }
-
   for (const key of REQUIRED_META) {
     if (data[key] === undefined || data[key] === null || data[key] === "") {
       errors.push(`missing required frontmatter: ${key}`);
     }
   }
-
-  if (data.description && String(data.description).length > 1024) {
-    errors.push("description must be < 1024 characters");
+  const name = data.name != null ? String(data.name) : "";
+  if (name && !isValidSkillName(name)) {
+    errors.push(`name "${name}" must be lowercase a-z0-9 and hyphens`);
   }
-
+  if (expectedId && name && name !== expectedId) {
+    errors.push(`name "${name}" must equal directory id "${expectedId}"`);
+  }
+  if (data.description) {
+    const d = String(data.description);
+    if (d.length > 1024) errors.push("description must be ≤ 1024 characters");
+    if (d.length < 40) warnings.push("description short — include what + when");
+  }
   if (data.type && !ALLOWED_TYPES.includes(data.type)) {
-    warnings.push(`type "${data.type}" not in standard set: ${ALLOWED_TYPES.join(", ")}`);
+    warnings.push(`type "${data.type}" not in standard set`);
   }
-
   if (data.category && !ALLOWED_CATEGORIES.includes(data.category)) {
-    warnings.push(
-      `category "${data.category}" not in standard set: ${ALLOWED_CATEGORIES.join(", ")}`
-    );
+    warnings.push(`category "${data.category}" not in standard set`);
   }
-
   for (const key of RECOMMENDED_META) {
-    if (data[key] === undefined) {
-      warnings.push(`recommended frontmatter missing: ${key}`);
-    }
+    if (data[key] === undefined) warnings.push(`recommended missing: ${key}`);
   }
-
   if (!hasSection(body, ["## quando usar", "## when to use"])) {
-    errors.push('missing "## Quando usar" (or When to use) section');
+    errors.push('missing "## Quando usar"');
   }
-
   if (!hasSection(body, ["## quando não usar", "## when not to use", "## do not use"])) {
-    errors.push('missing "## Quando NÃO usar" section (prevents skill overlap)');
+    errors.push('missing "## Quando NÃO usar"');
   }
-
-  // Soft checks
+  const lines = body.split(/\r?\n/).length;
+  if (lines > 500) {
+    warnings.push(`body ${lines} lines (>500) — prefer references/ (L3)`);
+  }
   if (!hasSection(body, ["exemplo", "checklist", "anti-padr", "anti-pattern"])) {
-    warnings.push("consider adding examples, checklist, or anti-patterns");
+    warnings.push("consider examples, checklist, or anti-patterns");
   }
-
-  if (/<[a-zA-Z][^>]*>/.test(body) && !body.includes("```")) {
-    warnings.push("HTML-like tags outside code fences may confuse some agents");
-  }
-
   return { rel, errors, warnings };
-}
-
-function listSkillFiles() {
-  return fs
-    .readdirSync(SKILLS_DIR)
-    .filter((f) => f.endsWith(".md") && f !== "README.md")
-    .map((f) => path.join(SKILLS_DIR, f));
 }
 
 function main() {
   const arg = process.argv[2];
   const files = arg
-    ? [path.resolve(arg)]
-    : listSkillFiles();
+    ? [{ skillPath: path.resolve(arg), id: path.basename(path.dirname(path.resolve(arg))) }]
+    : listSkills(SKILLS_DIR);
 
   let failed = 0;
   let warnCount = 0;
-
-  for (const file of files) {
+  for (const item of files) {
+    const file = item.skillPath;
     if (!fs.existsSync(file)) {
       console.error(`FAIL ${file}: not found`);
       failed++;
       continue;
     }
-    const { rel, errors, warnings } = validateFile(file);
+    const { rel, errors, warnings } = validateFile(file, item.id);
     if (errors.length) {
       failed++;
       console.error(`FAIL ${rel}`);
@@ -132,7 +119,6 @@ function main() {
       console.warn(`  ⚠ ${w}`);
     });
   }
-
   console.log(
     `\nValidated ${files.length} skill(s): ${files.length - failed} ok, ${failed} failed, ${warnCount} warning(s)`
   );

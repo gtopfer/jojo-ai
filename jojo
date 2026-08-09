@@ -4,8 +4,11 @@ jojo — CLI do SPECKIT jojo-ai
 
   jojo init [dir]   Instala o kit no repositório alvo (sem copiar à mão)
   jojo run [dir]    Lê agents.md · ### Features e lista/seleciona a próxima feature
+  jojo sync [dir]   Regenera registry/context e valida skills (kit)
+  jojo detect|version
 
 Sem dependências externas (Python 3 stdlib).
+LLM-agnóstico: qualquer agent de código que leia o repositório executa as fases.
 """
 
 from __future__ import annotations
@@ -21,7 +24,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Optional, Tuple
 
-VERSION = "0.2.0"
+VERSION = "0.3.0"
 
 # Diretório onde este script vive (repo jojo-ai / instalação do kit)
 JOJO_HOME = Path(__file__).resolve().parent
@@ -40,8 +43,6 @@ MANAGED_FILES = [
 ]
 MANAGED_DIRS = [
     "kit",
-    ".grok/skills/jojo-init",
-    ".grok/skills/jojo-run",
 ]
 
 # Instalação fresh também leva templates humanos se não existirem
@@ -116,10 +117,13 @@ def detect_jojo(target: Path) -> dict:
         except OSError:
             pass
 
+    # legacy signal (old installs); adapters now live under kit/adapters/
     if (target / ".grok" / "skills" / "jojo-run").is_dir() or (
         target / ".grok" / "skills" / "jojo-init"
     ).is_dir():
-        signals.append(".grok/skills/jojo-*")
+        signals.append(".grok/skills/jojo-* (legacy)")
+    if (target / "kit" / "adapters").is_dir():
+        signals.append("kit/adapters/")
 
     present = bool(meta) or (
         (target / "jojo").is_file() and (target / "kit").is_dir()
@@ -210,12 +214,8 @@ def install_managed(target: Path) -> List[str]:
         copy_file(src_lic, target / "LICENSE")
         written.append("LICENSE")
 
-    # skills grok
-    for rel in (".grok/skills/jojo-init", ".grok/skills/jojo-run"):
-        src = JOJO_HOME / rel
-        if src.is_dir():
-            copy_dir_replace(src, target / rel)
-            written.append(rel + "/")
+    # Optional legacy cleanup: stop shipping vendor-specific .grok paths.
+    # Portable adapter skills travel inside kit/adapters/ via kit/ copy.
 
     return written
 
@@ -421,9 +421,10 @@ def cmd_init(args: argparse.Namespace) -> int:
     print()
     print("Próximos passos:")
     print(f"  1. cd {target}")
-    print("  2. Edite agents.md → ### Features")
-    print("  3. Edite system-design.md")
-    print("  4. ./jojo run")
+    print("  2. Preencha agents.md Seção 1 + system-design.md (onboard com o agent)")
+    print("  3. Adicione itens em agents.md → ### Features")
+    print("  4. Abra qualquer agent de código neste app (LLM-agnóstico)")
+    print("  5. ./jojo run")
     print()
     return 0
 
@@ -541,8 +542,11 @@ def cmd_run(args: argparse.Namespace) -> int:
     print("  PRÓXIMA FEATURE (primeira - [ ]):")
     print(f"    {next_title}")
     print()
-    print("  Agente: leia agents.md + system-design.md, mapeie esta feature,")
-    print("  peça OK no chat, execute o loop de 8 fases, marque [x] ao concluir.")
+    print("  Próximo passo (humano):")
+    print("    1. Abra QUALQUER agent de código / assistente de IA neste projeto")
+    print("       (jojo não depende de fornecedor de LLM)")
+    print("    2. Instrua a seguir agents.md + kit/docs/agents/squad-lead.agent.md")
+    print("    3. Loop de 8 fases; ao concluir: [x] em ### Features + CHANGELOG")
     print()
 
     _write_run_state(root, next_title, pending, done)
@@ -617,6 +621,28 @@ def cmd_version(_: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_sync(args: argparse.Namespace) -> int:
+    """Regenera registry + context e valida skills no kit do alvo (ou home)."""
+    target = Path(args.path).expanduser().resolve()
+    kit = target / "kit"
+    if not (kit / "package.json").is_file():
+        # fallback: kit deste jojo (fonte)
+        kit = JOJO_HOME / "kit"
+    if not (kit / "package.json").is_file():
+        die(f"kit/ não encontrado em {target} nem em {JOJO_HOME}")
+
+    info(f"sync em {kit}")
+    r = subprocess.run(
+        ["npm", "run", "sync"],
+        cwd=str(kit),
+        check=False,
+    )
+    if r.returncode != 0:
+        die("npm run sync falhou", code=r.returncode or 1)
+    info("sync OK")
+    return 0
+
+
 def cmd_detect(args: argparse.Namespace) -> int:
     target = Path(args.path).expanduser().resolve()
     d = detect_jojo(target)
@@ -630,7 +656,7 @@ def cmd_detect(args: argparse.Namespace) -> int:
 def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser(
         prog="jojo",
-        description="SPECKIT jojo-ai — init instala o kit; run lê Features do agents.md",
+        description="SPECKIT jojo-ai — init|detect|run|sync|version (IA executa as fases)",
     )
     p.add_argument("--version", action="store_true", help="mostra versão")
     sub = p.add_subparsers(dest="command")
@@ -690,6 +716,18 @@ def build_parser() -> argparse.ArgumentParser:
         help="também imprime JSON da próxima feature",
     )
     p_run.set_defaults(func=cmd_run)
+
+    p_sync = sub.add_parser(
+        "sync",
+        help="regenera skills-registry + project-context e valida skills",
+    )
+    p_sync.add_argument(
+        "path",
+        nargs="?",
+        default=".",
+        help="projeto com kit/ (default: .); se não achar, usa JOJO_HOME",
+    )
+    p_sync.set_defaults(func=cmd_sync)
 
     p_ver = sub.add_parser("version", help="versão do jojo")
     p_ver.set_defaults(func=cmd_version)

@@ -1,95 +1,30 @@
-# Plano de Melhoria — jojo-ai
+# Plano de Melhoria — jojo-ai (projeto definitivo)
 
-**Status:** Tier 1–4 implementados com **UX single-file**.
+**Base real:** CLI Python `init|detect|run|sync|version` · backlog `### Features` · agent de código executa.
 
----
-
-## Guardrail de produto (inviolável)
+## Guardrail
 
 ```
-User-facing config surface = agents.md (Seção 1) + system-design.md only.
+Humano = ./jojo + runtime de agent (LLM-agnóstico)
+Estado opcional = 3 MDs raiz
+Máquina = kit/ + .ai/
 ```
 
-| Arquivo | Responsabilidade |
-| --- | --- |
-| `agents.md` | Produto, processo, guardrails |
-| `system-design.md` | Arquitetura + design system **deste** projeto |
+Não portar CLI Node da lixeira (approve/reject/review/propose).  
+Não expandir superfície humana de arquivos.
 
-Qualquer artefato extra é:
+## Feito neste ciclo (v2 / CLI 0.3)
 
-- **gerado** a partir de `agents.md` (`project-context.json`), ou
-- **interno do kit** (skills, registry, recommendations, validators), ou
-- **produzido por agentes** com aceite humano (specs, código, CHANGELOG).
+- [x] Skills `*/SKILL.md` + names agentskills-compatible  
+- [x] L1 registry / L2 body / L3 references  
+- [x] Skills: onboard, handoff, hotfix-path, delta-spec, a11y, api-contract, git-hygiene, security-basics  
+- [x] Squad Lead / agents sem comandos fantasmas  
+- [x] `./jojo sync`  
+- [x] recommendations + agents.md Seção 2 roteador  
+- [x] README CLI + IA  
 
-Nunca: pedir ao usuário `stack.md`, `guardrails.md`, `design-premises.md`, `agents-profile.md` separados — isso vive nos 2 arquivos acima.  
-Agentes e skills **devem ler `system-design.md`** antes de designar arquitetura ou UI.
+## Opcional depois
 
----
-
-## Implementado
-
-### Tier 1 — Estrutura de skills
-
-- [x] Frontmatter YAML em `kit/docs/skills/*`
-- [x] Types/categories (`development`, `design`, `architecture`, …)
-- [x] `kit/scripts/generate-registry.js` → `skills-registry.json`
-- [x] `npm run generate:registry`
-
-### Tier 2 — Qualidade
-
-- [x] `docs/skill-validator.md` + `kit/scripts/validate-skills.js`
-- [x] `requiredKnowledge`, `appliesTo`, `conflicts` no frontmatter
-- [x] Seções **Quando usar** / **Quando NÃO usar** nas skills
-- [x] `npm run validate:skills`
-
-### Tier 3 — Project context + system design
-
-- [x] `kit/scripts/generate-context.js` lê **Seção 1 de agents.md**
-- [x] Emite `project-context.json` (stack, users, guardrails + pointer `system-design.md`)
-- [x] **`system-design.md`** dedicado por projeto (arquitetura §2 + design system §3)
-- [x] Agents/skills apontam para `system-design.md` (não guidelines soltas)
-- [x] `npm run generate:context`
-
-### Tier 4 — Discovery (defaults do kit)
-
-- [x] `docs/recommendations.json` — skills por contexto e por fase
-- [x] Registry + recommendations para agentes
-- [x] Sem `agents-profile.md` de config humana
-
-### DX
-
-- [x] `package.json` com `sync` / `test:scripts`
-- [x] Princípio documentado em `agents.md` e `README.md`
-
----
-
-## Como agentes usam (sem envolver o usuário)
-
-```bash
-npm run sync
-```
-
-1. Valida skills  
-2. Regenera `skills-registry.json`  
-3. Regenera `project-context.json` a partir de `agents.md`
-
----
-
-## Próximos (opcional, sem quebrar UX)
-
-- [ ] CLI `./jojo` (status/approve/review) lendo o mesmo `agents.md`
-- [ ] CI workflow rodando `npm run sync` no meta-repo
-- [ ] Agente, no bootstrap, oferecer preencher Seção 1 via entrevista (ainda grava só em `agents.md`)
-
----
-
-## Filosofia
-
-```
-SPECKIT single-file
-    + metadados de skills (só kit)
-    + validação (só kit)
-    + context JSON (derivado de agents.md)
-    + recommendations (defaults)
-    = discovery para agentes, zero config extra para humanos
-```
+- [ ] `jojo doctor` (integridade leve)  
+- [ ] Export skills marketplace  
+- [ ] Manutenção de staleness Seção 1  

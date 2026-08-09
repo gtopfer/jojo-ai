@@ -61,7 +61,7 @@ sequenceDiagram
 | CLI | Python 3 | 3.x | Stdlib apenas; portável, sem `pip install` no alvo |
 | Artefatos de processo | Markdown + Gherkin | — | Legíveis por humanos e por IAs |
 | Persistência de estado | `.ai/state.md` | — | Resiliente a troca de sessão/contexto |
-| Integração com IAs | `CLAUDE.md`, `GEMINI.md` | — | Bootstrap de contexto por ferramenta |
+| Integração com IAs | `agents.md` (régua única LLM-agnóstica) | — | Bootstrap de contexto por ferramenta |
 
 ## 5. Componentes & Contratos de Interface
 

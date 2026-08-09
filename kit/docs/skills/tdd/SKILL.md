@@ -1,8 +1,8 @@
 ---
-name: TDD
+name: tdd
 type: development
 category: quality
-description: Test-Driven Development — RED → GREEN → REFACTOR cycle
+description: Test-Driven Development — RED then GREEN then REFACTOR. Use when writing tests or implementing features.
 usedFor: [code, tests, refactor]
 appliesTo: [backend, frontend]
 requiredKnowledge: [testing-frameworks, assertions]
@@ -12,7 +12,7 @@ conflicts: [skip-tests, no-tests]
 # Skill: TDD (Test-Driven Development)
 
 > **Usado por**: QA (fase `tech_approved`) e Developer (respeita RED→GREEN→REFACTOR).  
-> **Comando de verdade do kit**: a suíte local + `./jojo review` no fechamento.
+> **Comando de verdade do kit**: a suíte local + `a suíte de testes do projeto (npm test / pytest / cargo test / etc.)` no fechamento.
 
 ## Quando usar
 
@@ -76,7 +76,7 @@ Espelhe o código: `src/domain/pricing.ts` → `tests/domain/pricing.spec.ts` (o
 
 ## Prova de RED (obrigatória na fase QA)
 
-Antes de `./jojo approve` em `tech_approved`:
+Antes de `avanço de fase com OK humano (e [x] em ### Features ao concluir)` em `tech_approved`:
 
 1. Rode a suíte.  
 2. Novos testes **falham**.  

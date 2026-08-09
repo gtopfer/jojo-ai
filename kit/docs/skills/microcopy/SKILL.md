@@ -1,8 +1,8 @@
 ---
-name: Microcopy
+name: microcopy
 type: design
 category: design
-description: UI content design — CTAs, errors, empty states, labels
+description: UI content design — CTAs, errors, empty states, labels. Use when writing or reviewing interface copy.
 usedFor: [ui, ux, microcopy]
 appliesTo: [frontend]
 requiredKnowledge: [ux-writing, accessibility]
@@ -21,7 +21,7 @@ conflicts: []
 
 
 > **Usado por**: UX Designer (fase `spec_approved`); PM (tom de produto); Developer (strings na implementação).  
-> **Complementa**: `kit/docs/skills/ui-ux.md` e `system-design.md` § microcopy.
+> **Complementa**: `kit/docs/skills/ui-ux/SKILL.md` e `system-design.md` § microcopy.
 
 ## Objetivo
 

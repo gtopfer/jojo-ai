@@ -1,8 +1,8 @@
 {
   "name": "jojo-ai-kit",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "private": true,
-  "description": "Internal kit for jojo-ai SPECKIT. Humans edit only root agents.md, system-design.md, CHANGELOG.md.",
+  "description": "Internal kit for jojo-ai SPECKIT. Humans use ./jojo + AI runtime; root agents.md, system-design.md, CHANGELOG.md.",
   "scripts": {
     "generate:registry": "node scripts/generate-registry.js",
     "generate:context": "node scripts/generate-context.js",

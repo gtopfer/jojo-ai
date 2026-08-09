@@ -1,14 +1,82 @@
 {
-  "version": "1.0",
-  "generated": "2026-08-07T15:39:37.058Z",
-  "sourceOfTruth": "kit/docs/skills/*.md (agents only; humans edit agents.md + system-design.md + CHANGELOG.md)",
+  "version": "2.0",
+  "generated": "2026-08-09T00:06:12.704Z",
+  "sourceOfTruth": "kit/docs/skills/<id>/SKILL.md (agents only; humans use CLI + 3 root MDs)",
+  "progressiveDisclosure": {
+    "l1": "name + description in this registry",
+    "l2": "full SKILL.md when activated",
+    "l3": "references/, scripts/, assets/ on demand"
+  },
   "skills": [
     {
+      "id": "a11y",
+      "name": "a11y",
+      "type": "design",
+      "category": "design",
+      "description": "Accessibility baseline WCAG 2.1 AA — keyboard, labels, contrast. Use with ui-ux when the feature has UI.",
+      "usedFor": [
+        "accessibility",
+        "ui"
+      ],
+      "appliesTo": [
+        "frontend"
+      ],
+      "requiredKnowledge": [
+        "accessibility"
+      ],
+      "conflicts": [],
+      "mandatory": false,
+      "path": "kit/docs/skills/a11y/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/a11y/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:d09f660f2cc8"
+    },
+    {
+      "id": "api-contract",
+      "name": "api-contract",
+      "type": "architecture",
+      "category": "documentation",
+      "description": "Define request/response contracts and errors before implementation. Use in architect phase for API features.",
+      "usedFor": [
+        "api",
+        "contracts",
+        "architecture"
+      ],
+      "appliesTo": [
+        "backend",
+        "frontend"
+      ],
+      "requiredKnowledge": [
+        "http",
+        "schemas"
+      ],
+      "conflicts": [],
+      "mandatory": false,
+      "path": "kit/docs/skills/api-contract/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/api-contract/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:f0b19f540728"
+    },
+    {
       "id": "autonomous-loop",
-      "name": "Autonomous Loop",
+      "name": "autonomous-loop",
       "type": "development",
       "category": "quality",
-      "description": "Self-heal loop with max 3 attempts per root cause after review failures",
+      "description": "Self-heal loop with max 3 attempts per root cause after test/review failures. Use when fixing code after suite fails.",
       "usedFor": [
         "code",
         "fix",
@@ -24,15 +92,24 @@
       ],
       "conflicts": [],
       "mandatory": false,
-      "path": "kit/docs/skills/autonomous-loop.md",
-      "hash": "sha256:013ae242da96"
+      "path": "kit/docs/skills/autonomous-loop/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/autonomous-loop/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:61ca6b58d050"
     },
     {
       "id": "code-review",
-      "name": "Code Review",
+      "name": "code-review",
       "type": "development",
       "category": "quality",
-      "description": "Programmatic and manual review gate before phase advance",
+      "description": "Programmatic suite + manual diff gate before advancing phase. Use after implementation before marking feature done.",
       "usedFor": [
         "code",
         "review",
@@ -51,15 +128,55 @@
         "skip-review"
       ],
       "mandatory": false,
-      "path": "kit/docs/skills/code-review.md",
-      "hash": "sha256:a1c07cfc905a"
+      "path": "kit/docs/skills/code-review/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/code-review/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:6ce19fb8d130"
+    },
+    {
+      "id": "delta-spec",
+      "name": "delta-spec",
+      "type": "documentation",
+      "category": "documentation",
+      "description": "Spec only the change (ADDED/MODIFIED/REMOVED) for brownfield work. Use instead of rewriting the full product spec.",
+      "usedFor": [
+        "spec",
+        "brownfield",
+        "change"
+      ],
+      "appliesTo": [
+        "all"
+      ],
+      "requiredKnowledge": [
+        "requirements"
+      ],
+      "conflicts": [],
+      "mandatory": false,
+      "path": "kit/docs/skills/delta-spec/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/delta-spec/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:83a4f3170b2f"
     },
     {
       "id": "ducks-pattern",
-      "name": "Ducks Pattern",
+      "name": "ducks-pattern",
       "type": "architecture",
       "category": "organization",
-      "description": "Modular code organization — group related code by feature, not by type",
+      "description": "Modular code organization by feature, not by file type. Use when adding features or organizing modules.",
       "usedFor": [
         "backend",
         "frontend",
@@ -76,15 +193,115 @@
         "layer-by-type-folders"
       ],
       "mandatory": true,
-      "path": "kit/docs/skills/ducks-pattern.md",
-      "hash": "sha256:56945a9f298c"
+      "path": "kit/docs/skills/ducks-pattern/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/ducks-pattern/SKILL.md",
+        "l3": {
+          "references": true,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:d2208270e15b"
+    },
+    {
+      "id": "git-hygiene",
+      "name": "git-hygiene",
+      "type": "development",
+      "category": "quality",
+      "description": "Atomic commits, clear messages, no force-push to shared main. Use before finishing a feature or opening a PR.",
+      "usedFor": [
+        "git",
+        "commit",
+        "pr"
+      ],
+      "appliesTo": [
+        "all"
+      ],
+      "requiredKnowledge": [
+        "git"
+      ],
+      "conflicts": [],
+      "mandatory": false,
+      "path": "kit/docs/skills/git-hygiene/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/git-hygiene/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:6b9716d4de11"
+    },
+    {
+      "id": "handoff",
+      "name": "handoff",
+      "type": "process",
+      "category": "process",
+      "description": "Compact phase handoff so the next turn trusts disk not chat history. Use at every phase change or session resume.",
+      "usedFor": [
+        "orchestration",
+        "session",
+        "context"
+      ],
+      "appliesTo": [
+        "all"
+      ],
+      "requiredKnowledge": [],
+      "conflicts": [],
+      "mandatory": false,
+      "path": "kit/docs/skills/handoff/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/handoff/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:a3a17071d4b5"
+    },
+    {
+      "id": "hotfix-path",
+      "name": "hotfix-path",
+      "type": "process",
+      "category": "process",
+      "description": "Short lifecycle for small bugfixes and chores. Use when change is tiny and well-specified; skip full 8-phase theatre.",
+      "usedFor": [
+        "hotfix",
+        "bugfix",
+        "chore"
+      ],
+      "appliesTo": [
+        "all"
+      ],
+      "requiredKnowledge": [
+        "debugging"
+      ],
+      "conflicts": [],
+      "mandatory": false,
+      "path": "kit/docs/skills/hotfix-path/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/hotfix-path/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:3ae38e1dc668"
     },
     {
       "id": "microcopy",
-      "name": "Microcopy",
+      "name": "microcopy",
       "type": "design",
       "category": "design",
-      "description": "UI content design — CTAs, errors, empty states, labels",
+      "description": "UI content design — CTAs, errors, empty states, labels. Use when writing or reviewing interface copy.",
       "usedFor": [
         "ui",
         "ux",
@@ -99,15 +316,86 @@
       ],
       "conflicts": [],
       "mandatory": false,
-      "path": "kit/docs/skills/microcopy.md",
-      "hash": "sha256:8366682338b7"
+      "path": "kit/docs/skills/microcopy/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/microcopy/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:1b3bc4601dba"
+    },
+    {
+      "id": "onboard",
+      "name": "onboard",
+      "type": "process",
+      "category": "process",
+      "description": "Interview and fill agents.md Seção 1 + system-design.md once. Use on first setup or when placeholders remain.",
+      "usedFor": [
+        "bootstrap",
+        "setup",
+        "interview"
+      ],
+      "appliesTo": [
+        "all"
+      ],
+      "requiredKnowledge": [
+        "product-context"
+      ],
+      "conflicts": [],
+      "mandatory": false,
+      "path": "kit/docs/skills/onboard/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/onboard/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:80d126fb511a"
+    },
+    {
+      "id": "security-basics",
+      "name": "security-basics",
+      "type": "development",
+      "category": "quality",
+      "description": "Baseline security — secrets, input validation, auth. Use during code-review on sensitive changes.",
+      "usedFor": [
+        "security",
+        "review"
+      ],
+      "appliesTo": [
+        "backend",
+        "frontend"
+      ],
+      "requiredKnowledge": [
+        "security-basics"
+      ],
+      "conflicts": [],
+      "mandatory": false,
+      "path": "kit/docs/skills/security-basics/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/security-basics/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:2dfde2607835"
     },
     {
       "id": "tdd",
-      "name": "TDD",
+      "name": "tdd",
       "type": "development",
       "category": "quality",
-      "description": "Test-Driven Development — RED → GREEN → REFACTOR cycle",
+      "description": "Test-Driven Development — RED then GREEN then REFACTOR. Use when writing tests or implementing features.",
       "usedFor": [
         "code",
         "tests",
@@ -126,15 +414,24 @@
         "no-tests"
       ],
       "mandatory": false,
-      "path": "kit/docs/skills/tdd.md",
-      "hash": "sha256:1b3cf37385e3"
+      "path": "kit/docs/skills/tdd/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/tdd/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:f38d18238472"
     },
     {
       "id": "ui-ux",
-      "name": "UI/UX",
+      "name": "ui-ux",
       "type": "design",
       "category": "design",
-      "description": "Interface states, accessibility, consistency and microcopy",
+      "description": "Interface states, accessibility, consistency and microcopy. Use for any feature with a human-facing surface.",
       "usedFor": [
         "ui",
         "ux",
@@ -151,8 +448,17 @@
       ],
       "conflicts": [],
       "mandatory": false,
-      "path": "kit/docs/skills/ui-ux.md",
-      "hash": "sha256:d8cf4be297bc"
+      "path": "kit/docs/skills/ui-ux/SKILL.md",
+      "layers": {
+        "l1": "registry",
+        "l2": "kit/docs/skills/ui-ux/SKILL.md",
+        "l3": {
+          "references": false,
+          "scripts": false,
+          "assets": false
+        }
+      },
+      "hash": "sha256:94609c23a7ec"
     }
   ]
 }

@@ -1,8 +1,8 @@
 ---
-name: UI/UX
+name: ui-ux
 type: design
 category: design
-description: Interface states, accessibility, consistency and microcopy
+description: Interface states, accessibility, consistency and microcopy. Use for any feature with a human-facing surface.
 usedFor: [ui, ux, accessibility, microcopy]
 appliesTo: [frontend]
 requiredKnowledge: [design-systems, accessibility, responsive]

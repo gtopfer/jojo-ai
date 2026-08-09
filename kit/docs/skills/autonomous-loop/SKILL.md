@@ -1,8 +1,8 @@
 ---
-name: Autonomous Loop
+name: autonomous-loop
 type: development
 category: quality
-description: Self-heal loop with max 3 attempts per root cause after review failures
+description: Self-heal loop with max 3 attempts per root cause after test/review failures. Use when fixing code after suite fails.
 usedFor: [code, fix, review]
 appliesTo: [backend, frontend]
 requiredKnowledge: [debugging, testing]
@@ -11,13 +11,13 @@ conflicts: []
 
 # Skill: Loop Autônomo e Autocorreção
 
-> **Usado por**: Developer em `test_red` (e qualquer agente que corrija falhas de `./jojo review`).  
+> **Usado por**: Developer em `test_red` (e qualquer agente que corrija falhas de `a suíte de testes do projeto (npm test / pytest / cargo test / etc.)`).  
 > **Objetivo**: maximizar progresso com feedback real, sem loop infinito de tokens.
 
 ## Quando usar
 
 - Após escrever ou alterar código.  
-- Quando `./jojo review` ou a suíte de testes falha.  
+- Quando `a suíte de testes do projeto (npm test / pytest / cargo test / etc.)` ou a suíte de testes falha.  
 - Depois de um `reject` que devolveu a spec a `test_red`.
 
 ## Quando NÃO usar
@@ -31,7 +31,7 @@ conflicts: []
 ```
 1. PLANEJAR    → o que deve mudar? quais arquivos? qual teste prova?
 2. ESCREVER    → menor mudança correta
-3. EXECUTAR    → ./jojo review  (e runner da stack se o review não cobrir tudo)
+3. EXECUTAR    → a suíte de testes do projeto (npm test / pytest / cargo test / etc.)  (e runner da stack se o review não cobrir tudo)
 4. AVALIAR     → APROVADO? avança. REPROVADO? classifique a falha
 5. CORRIGIR    → uma causa raiz por vez
 6. (opcional) REFATORAR → só com verde; re-rode o review
@@ -56,7 +56,7 @@ Nunca pule **EXECUTAR**. “Compila na minha cabeça” não conta.
 1. Leia a **primeira** falha relevante do log (não a última de uma cascata se possível).  
 2. Identifique **um** arquivo e **uma** causa.  
 3. Aplique o patch mínimo.  
-4. Rode `./jojo review` de novo.  
+4. Rode `a suíte de testes do projeto (npm test / pytest / cargo test / etc.)` de novo.  
 5. Se a mesma causa falhar de novo, registre tentativa #N e mude a hipótese — não repita o mesmo patch.
 
 ### Contador de tentativas
@@ -92,9 +92,9 @@ Pergunta / decisão necessária:
 ## Depois do verde
 
 1. Refatore se o código ficou feio **sem** mudar comportamento.  
-2. Rode `./jojo review` outra vez.  
-3. Passe pelo checklist de `kit/docs/skills/code-review.md`.  
-4. Só então `./jojo approve`.
+2. Rode `a suíte de testes do projeto (npm test / pytest / cargo test / etc.)` outra vez.  
+3. Passe pelo checklist de `kit/docs/skills/code-review/SKILL.md`.  
+4. Só então `avanço de fase com OK humano (e [x] em ### Features ao concluir)`.
 
 ## Anti-padrões
 

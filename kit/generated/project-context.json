@@ -1,6 +1,6 @@
 {
   "version": "1.2",
-  "generated": "2026-08-07T15:39:37.151Z",
+  "generated": "2026-08-09T00:06:12.789Z",
   "sourceOfTruth": {
     "product": "agents.md",
     "systemDesign": "system-design.md",
@@ -47,10 +47,18 @@
     "note": "Agents must read system-design.md for architecture (§2) and design system (§3)."
   },
   "skills": [
+    "a11y",
+    "api-contract",
     "autonomous-loop",
     "code-review",
+    "delta-spec",
     "ducks-pattern",
+    "git-hygiene",
+    "handoff",
+    "hotfix-path",
     "microcopy",
+    "onboard",
+    "security-basics",
     "tdd",
     "ui-ux"
   ],

@@ -1,43 +1,32 @@
 # jojo-ai — kit interno
 
-Máquina do SPECKIT (agents, skills, scripts, templates).  
+Máquina do SPECKIT. **Humanos não abrem isto no dia a dia.**
 
-**Humanos não precisam abrir esta pasta no dia a dia.**  
-Na raiz do projeto, edite só:
-
-| Arquivo | Função |
-| --- | --- |
-| `../agents.md` | Produto + processo |
-| `../system-design.md` | Arquitetura + design system |
-| `../CHANGELOG.md` | Feito vs. pendente |
+Operação: **`./jojo`** + agent de código. Raiz: `agents.md`, `system-design.md`, `CHANGELOG.md`.
 
 ## Layout
 
 ```
 kit/
-├── docs/
-│   ├── agents/          # runbooks
-│   ├── skills/          # TDD, code-review, ui-ux, ducks
-│   ├── recommendations.json
-│   └── skill-validator.md
-├── scripts/             # generate + validate
-├── templates/           # scaffolding de specs
-├── generated/           # registry + project-context (não editar)
-├── meta/                # planos internos do kit
+├── docs/agents/           # runbooks de fase
+├── docs/skills/<id>/SKILL.md
+├── docs/recommendations.json
+├── scripts/               # generate + validate
+├── templates/
+├── generated/             # registry + context
 └── package.json
 ```
 
-## Comandos (mantenedores / agentes)
+## Comandos
 
 ```bash
-cd kit
-npm run sync
+./jojo sync          # na raiz do app ou fonte
+# ou
+cd kit && npm run sync
 ```
 
-## Paths que agentes devem preferir
+## Progressive disclosure
 
-- Skills: `kit/docs/skills/*.md`
-- Runbooks: `kit/docs/agents/*.md`
-- Registry: `kit/generated/skills-registry.json`
-- Context: `kit/generated/project-context.json`
-- Recommendations: `kit/docs/recommendations.json`
+| L1 | registry (name + description) |
+| L2 | SKILL.md body |
+| L3 | references/ etc. |

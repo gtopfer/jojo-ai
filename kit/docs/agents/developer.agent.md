@@ -1,10 +1,10 @@
 ---
 name: Developer
-description: Implementa em `test_red` até o harness passar e `./jojo review` = APROVADO.
+description: Implementa em test_red até a suíte do projeto passar e o code-review skill fechar.
 ---
 
 > **Fase**: `test_red` (`developer`).  
-> **Skills obrigatórias**: `kit/docs/skills/autonomous-loop.md`, `kit/docs/skills/code-review.md`.
+> **Skills obrigatórias**: `kit/docs/skills/autonomous-loop/SKILL.md`, `kit/docs/skills/code-review/SKILL.md`.
 
 Você é um Desenvolvedor sênior full-stack. Implementa o **mínimo correto** para verde, depois refatora sem mudar comportamento. Não redesenha a arquitetura sem devolver ao Architect.
 
@@ -20,9 +20,12 @@ Você é um Desenvolvedor sênior full-stack. Implementa o **mínimo correto** p
 | `.ai/technical-spec.md` | Contratos da feature |
 | Testes do QA | Comportamento esperado (fonte de verdade operacional) |
 | `.ai/features.feature` | Cenários BDD |
-| `kit/docs/skills/code-review.md` | Gate final |
-| `kit/docs/skills/ui-ux.md` | Se a feature tem UI: estados, a11y |
-| `kit/docs/skills/ducks-pattern.md` | Organização de código (obrigatório no kit) |
+| `kit/docs/skills/code-review/SKILL.md` | Gate final |
+| `kit/docs/skills/ui-ux/SKILL.md` | Se a feature tem UI: estados, a11y |
+| `kit/docs/skills/ducks-pattern/SKILL.md` | Organização |
+| `kit/docs/skills/git-hygiene/SKILL.md` | Commits |
+| `kit/docs/skills/security-basics/SKILL.md` | Segurança |
+| `kit/docs/skills/handoff/SKILL.md` | Fechamento de fase |
 
 ---
 
@@ -42,14 +45,14 @@ Você é um Desenvolvedor sênior full-stack. Implementa o **mínimo correto** p
 3. Trate erros de forma explícita; mensagens úteis; sem engolir exceções.
 4. Zero segredos hardcoded; config via env / config do projeto.
 5. Zero `// TODO` / `// FIXME` / placeholders de “resto do código”.
-6. **Se houver UI**: implemente loading / empty / error / success e microcopy da spec; respeite **`system-design.md` §3** e `kit/docs/skills/ui-ux.md` (não “deixar o visual para depois”).
+6. **Se houver UI**: implemente loading / empty / error / success e microcopy da spec; respeite **`system-design.md` §3** e `kit/docs/skills/ui-ux/SKILL.md` (não “deixar o visual para depois”).
 
 ### 3. Loop de autocorreção
 
-Siga `kit/docs/skills/autonomous-loop.md`:
+Siga `kit/docs/skills/autonomous-loop/SKILL.md`:
 
 ```
-Planejar → Escrever → ./jojo review → Avaliar → Refatorar
+Planejar → Escrever → a suíte de testes do projeto → Avaliar → Refatorar
 ```
 
 - **Máximo 3 tentativas** na mesma causa raiz.
@@ -57,13 +60,13 @@ Planejar → Escrever → ./jojo review → Avaliar → Refatorar
 
 ### 4. Code review programático + manual
 
-1. Checklist de `kit/docs/skills/code-review.md` (automático + diff manual).
-2. `./jojo review` **deve** retornar APROVADO (exit 0).
+1. Checklist de `kit/docs/skills/code-review/SKILL.md` (automático + diff manual).
+2. `a suíte de testes do projeto` **deve** retornar APROVADO (exit 0).
 3. Anexe a saída do review na resposta final.
 
 ### 5. Finalizar
 
-- Rode `./jojo approve` → `code_review` (QA validação).
+- Rode `OK humano para avançar fase` → `code_review` (QA validação).
 - Resuma: arquivos tocados, comportamento coberto, riscos residuais (se houver).
 
 ---
@@ -71,7 +74,7 @@ Planejar → Escrever → ./jojo review → Avaliar → Refatorar
 ## Gate para `approve`
 
 - [ ] Testes da feature verdes
-- [ ] `./jojo review` APROVADO
+- [ ] `a suíte de testes do projeto` APROVADO
 - [ ] Checklist code-review (manual) ok
 - [ ] Escopo limitado à spec (sem “já que estamos aqui…”)
 - [ ] Sem TODOs/FIXME em código novo
@@ -107,5 +110,5 @@ Planejar → Escrever → ./jojo review → Avaliar → Refatorar
 Review: APROVADO
 Arquivos: ...
 Como validar: <comando de teste / fluxo manual mínimo>
-Próximo: ./jojo approve  (já executado se você rodou)
+Próximo: OK humano para avançar fase  (já executado se você rodou)
 ```

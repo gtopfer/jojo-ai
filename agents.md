@@ -2,6 +2,15 @@
 
 Régua universal + Especificação do Projeto.
 
+**LLM-agnóstico.** **Humano opera com:** `./jojo` (`init` · `detect` · `run` · `sync` · `version`) + **agent de código (qualquer LLM)** no projeto.  
+**Não** administre `kit/` no dia a dia.
+
+| Arquivo (estado) | Função |
+| --- | --- |
+| **`agents.md`** (este) | Produto (Seção 1) + backlog **`### Features`** + regras (Seção 2) |
+| **`system-design.md`** | Arquitetura + design system |
+| **`CHANGELOG.md`** | Feito vs. falta |
+
 ---
 
 ## 🎯 Como Usar (humano)
@@ -9,19 +18,19 @@ Régua universal + Especificação do Projeto.
 ### Em um projeto novo
 
 ```bash
-# a partir deste repo (fonte do kit)
+# a partir do repo fonte jojo-ai
 ./jojo init /caminho/do/seu-projeto
 cd /caminho/do/seu-projeto
 ```
 
 ### Todo dia
 
-1. Escreva features em **Seção 1 → `### Features`** (`- [ ] ...`)
-2. Preencha **`system-design.md`** (se ainda não)
-3. Rode **`./jojo run`** ou no chat **`/jojo-run`**
-4. A IA mapeia a primeira `- [ ]`, pede OK e implementa
+1. Backlog em **Seção 1 → `### Features`** (`- [ ]` / `- [x]`)
+2. **Inicie um agent de código** no app (qualquer LLM/fornecedor)
+3. Rode **`./jojo run`**
+4. A IA (Squad Lead + fases) pede OK, implementa, marca `[x]`
 
-**Onde escrever a NOVA FEATURE:** só em **`### Features`** (abaixo).
+**Onde a NOVA FEATURE entra:** só em **`### Features`** (abaixo).
 
 ---
 
@@ -58,8 +67,8 @@ cd /caminho/do/seu-projeto
 
 ### Features
 
-> **VOCÊ ESCREVE A FEATURE AQUI** (só linhas `- [ ]` / `- [x]` contam para o `./jojo run`).  
-> Comandos: `./jojo init` (instala kit) · `./jojo run` (próxima feature) · skills `/jojo-init` `/jojo-run`
+> **Backlog** — só linhas `- [ ]` / `- [x]` contam para `./jojo run`.  
+> CLI: `./jojo init` · `./jojo run` · `./jojo sync` · `./jojo detect` · `./jojo version`
 
 **Backlog:**
 
@@ -69,29 +78,51 @@ cd /caminho/do/seu-projeto
 
 ## 📋 SEÇÃO 2: REGRAS DE AGENTES (Não Altere)
 
+> **Roteador** — Seção 1 + Features no boot. Skills/runbooks sob demanda (progressive disclosure).
+
 ### Princípio de UX
 
 ```
-Humano escreve features → agents.md Seção 1 · ### Features
-Humano escreve design   → system-design.md
-Agentes leem, mapeiam, pedem OK, executam, marcam [x]
+Humano:  ./jojo  +  qualquer agent de código (LLM-agnóstico)
+Backlog: agents.md → ### Features
+Design:  system-design.md
+Régua:   agents.md  (única; sem arquivo por fornecedor)
+Máquina: kit/  ·  .ai/
 ```
 
-- **Fonte da verdade do backlog = `### Features` neste arquivo.**  
-- Nunca peça ao humano outro arquivo só para “cadastrar” feature.  
-- Agente **pode** gerar `.ai/specs/…` por baixo dos panos (detalhe interno) — o humano **não** é obrigado a abrir isso.
+- Fonte do backlog = **`### Features`**.  
+- Specs detalhadas em `.ai/specs/` são internas.  
+- Nunca peça arquivos extras de config ao humano.  
+- **Não** duplique a régua em arquivos proprietários de IDE/LLM.  
+- **`./jojo run` não implementa sozinho** — o agent de código que o humano abrir executa as fases.
 
-### Bootstrap (agentes / CI)
+### CLI real
 
 ```bash
-cd kit && npm run sync
+./jojo init [dir]      # instala/atualiza kit (preserva 3 MDs humanos)
+./jojo detect [dir]
+./jojo run [dir]       # próxima - [ ]  (+ .ai/jojo-run.json)
+./jojo sync [dir]      # registry + context + validate skills
+./jojo version
 ```
 
-### 8 Fases
+Não invente `approve` / `reject` / `review` / `propose` como subcomandos desta CLI.  
+Gates = OK humano + suíte do **app** + skills. Done = `- [x]` + CHANGELOG.
+
+### Bootstrap kit (meta)
+
+```bash
+./jojo sync
+# ou: cd kit && npm run sync
+```
+
+### 8 Fases (feature)
 
 ```
 draft → spec_approved → ux_approved → tech_approved → test_red → code_review → tested → done
 ```
+
+Hotfix: skill `hotfix-path` (path curto; ainda com qualidade).
 
 ### 6 Agentes
 
@@ -106,10 +137,17 @@ draft → spec_approved → ux_approved → tech_approved → test_red → code_
 | tested | Product Manager | `kit/docs/agents/product-manager.agent.md` |
 | (sempre) | Squad Lead | `kit/docs/agents/squad-lead.agent.md` |
 
-### Skills
+### Skills (L1: `kit/generated/skills-registry.json`)
 
-Catálogo: `kit/generated/skills-registry.json`  
-`tdd` · `code-review` · `ui-ux` · `ducks-pattern` · `autonomous-loop` · `microcopy`
+Layout: `kit/docs/skills/<id>/SKILL.md`
+
+`onboard` · `handoff` · `hotfix-path` · `delta-spec` · `tdd` · `code-review` · `autonomous-loop` · `ducks-pattern` · `ui-ux` · `microcopy` · `a11y` · `api-contract` · `git-hygiene` · `security-basics`
+
+Discovery: `kit/docs/recommendations.json` (não é config humana).
+
+### Templates
+
+`kit/templates/spec.md` · `delta-spec.md` · `technical-spec.md` · `adr.md`
 
 ### 5 Princípios
 
@@ -117,34 +155,34 @@ Catálogo: `kit/generated/skills-registry.json`
 2. Sem laziness (causa raiz)  
 3. Impacto mínimo  
 4. Reversibilidade  
-5. Verificação (testes verdes)
+5. Verificação (suíte verde)
 
 ---
 
 ## 🔄 FLUXO (Para Agentes)
 
 ```
-1. Lê agents.md SEÇÃO 1 (projeto)
-2. Lê ### Features  ← backlog humano
-3. Lê system-design.md
-4. Pega o PRIMEIRO item - [ ] (não feito)
-5. Apresenta resumo + plano no chat → AGUARDA OK do humano
-6. Executa 8 fases (PM → … → done)
-7. Marca - [x] na ### Features e registra em CHANGELOG.md
+1. ./jojo run  (+ sync se necessário)
+2. Lê agents.md Seção 1 + ### Features + system-design.md
+3. Placeholders? → onboard
+4. Classifica feature vs hotfix
+5. OK humano → 8 fases (ou path curto)
+6. Skills L2 sob demanda
+7. Ao done: - [x] em Features + CHANGELOG + ./jojo run
 ```
 
 ### Checklist
 
-- [ ] Leu **### Features** em agents.md  
+- [ ] Leu **### Features** e `.ai/jojo-run.json`  
 - [ ] Leu system-design.md  
-- [ ] Feature nova = primeiro `- [ ]`  
-- [ ] OK humano no chat antes de codar  
-- [ ] Ao terminar: `- [x]` em Features + CHANGELOG  
+- [ ] Runtime de IA no app  
+- [ ] OK humano antes de codar (feature)  
+- [ ] Ao terminar: `- [x]` + CHANGELOG  
 
 ---
 
 ## 📌 Resposta em uma linha
 
-**Nova feature → Seção 1 → `### Features` → item `- [ ] ...`**
+**Feature → `### Features` → `./jojo run` → IA nas fases → `[x]`**
 
-**Versão:** 1.4 | Backlog humano = `### Features`
+**Versão:** 2.0 | CLI `init|detect|run|sync|version` · backlog Features · kit Agent Skills
