@@ -73,8 +73,19 @@ Este README é o **manual de operação**. Você opera com a **CLI `./jojo`** e 
 
 ```bash
 ./jojo --help
-./jojo init --help    # flags de force/reset se existirem
+./jojo init --help
 ```
+
+**Flags do `init`:**
+
+| Flag | Efeito |
+| --- | --- |
+| `--force` | Sobrescreve também `agents.md`, `system-design.md` e `CHANGELOG.md` (perde edições humanas) |
+| `--reset-human` | No update, reseta só os 3 templates humanos, sem forçar o resto |
+| `--skip-sync` | Não roda `npm run sync` no kit ao final |
+| `--yes` | Não pede confirmação em casos especiais (ex.: alvo = repo fonte) |
+
+**Versões:** a CLI `jojo` (constante `VERSION` no script) e o `kit/` (`kit/package.json`) têm versionamento independente; `detect` mostra a versão da CLI instalada.
 
 **Atualizar** o kit num projeto já instalado: de novo `./jojo init /caminho/do/seu-app` (detecta instalação antiga sozinho; não apaga a Seção 1 humana salvo flags de force).
 

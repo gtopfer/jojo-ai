@@ -6,6 +6,10 @@ Rastreamento do projeto (feito vs. falta). Agentes atualizam com OK humano.
 
 ### Implemented
 
+- [x] Testes automatizados da CLI (`tests/test_cli.py`, unittest stdlib): init/detect/run/version + sync
+- [x] CI: job `cli` no workflow roda a suíte de testes da CLI
+- [x] README: flags do `init` documentadas (--force, --reset-human, --skip-sync, --yes) + nota de versionamento CLI x kit
+
 - [x] SPECKIT: `agents.md` + `system-design.md` + `CHANGELOG.md`
 - [x] CLI Python: `init` · `detect` · `run` · **`sync`** · `version` (v0.3.0)
 - [x] Backlog = `### Features` + `.ai/jojo-run.json`
