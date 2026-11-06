@@ -29,6 +29,12 @@ VERSION = "0.3.0"
 # Diretório onde este script vive (repo jojo-ai / instalação do kit)
 JOJO_HOME = Path(__file__).resolve().parent
 
+# Identificador público estável gravado no metadado de instalação
+# (.ai/jojo-install.json -> "source"). NÃO usar str(JOJO_HOME): o caminho
+# absoluto da máquina expõe nome de usuário e estrutura de pastas quando o
+# metadado é versionado no repositório alvo.
+JOJO_SOURCE_ID = "https://github.com/gtopfer/jojo-ai"
+
 # Arquivos do HUMANO — em update NÃO sobrescreve (salvo --force / --reset-human)
 HUMAN_FILES = [
     "agents.md",
@@ -282,7 +288,7 @@ def write_install_meta(
         "jojo_version": VERSION,
         "previous_version": previous_version,
         "mode": mode,
-        "source": str(JOJO_HOME),
+        "source": JOJO_SOURCE_ID,
         "written": written,
         "removed": removed,
         "preserved_human": preserved,
