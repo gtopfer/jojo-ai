@@ -136,6 +136,36 @@ class JojoCLITest(unittest.TestCase):
         self.assertEqual(r.returncode, 0, r.stderr)
         self.assertNotIn("MARCA-HUMANA-AGENTS", agents.read_text())
 
+    # ── metadado de instalação (privacidade do campo source) ────────────
+
+    ABSOLUTE_PATH_RE = r"^(/|[A-Za-z]:[\\/]|~)"  # posix, windows ou ~
+
+    def test_init_writes_public_source_not_local_path(self) -> None:
+        self.assertEqual(self.init_target().returncode, 0)
+        meta = json.loads((self.target / ".ai/jojo-install.json").read_text())
+        source = meta["source"]
+        self.assertNotRegex(source, self.ABSOLUTE_PATH_RE)
+        self.assertNotIn(str(REPO_ROOT), source)
+        self.assertIn("jojo-ai", source)
+
+    def test_update_replaces_legacy_local_path_in_source(self) -> None:
+        self.assertEqual(self.init_target().returncode, 0)
+        meta_path = self.target / ".ai/jojo-install.json"
+        meta = json.loads(meta_path.read_text())
+        # metadado legado (<=0.3.0): caminho absoluto da máquina no source
+        meta["source"] = str(self.tmp / "projetos" / "jojo-ai")
+        meta["installed_at"] = "2020-01-01T00:00:00Z"
+        meta_path.write_text(json.dumps(meta, indent=2) + "\n", encoding="utf-8")
+
+        r = self.init_target()  # modo update
+        self.assertEqual(r.returncode, 0, r.stderr)
+        new_meta = json.loads(meta_path.read_text())
+        self.assertNotRegex(new_meta["source"], self.ABSOLUTE_PATH_RE)
+        self.assertNotIn(str(self.tmp), new_meta["source"])
+        self.assertEqual(new_meta["mode"], "update")
+        # compatibilidade: metadado legado continua legível e demais campos preservados
+        self.assertEqual(new_meta["installed_at"], "2020-01-01T00:00:00Z")
+
     # ── detect ──────────────────────────────────────────────────────────
 
     def test_detect_empty_dir_reports_absent(self) -> None:
